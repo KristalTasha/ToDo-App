@@ -1,0 +1,7 @@
+GET  http://localhosT:7000
+content-type: application/json
+
+{
+    "status": "done"
+}
+
