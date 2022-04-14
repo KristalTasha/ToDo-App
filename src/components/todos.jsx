@@ -1,6 +1,6 @@
 import React from 'react'
 import Todo from './todo'
-import './todos.css'
+import './styles/todos.css'
 
 export default function Todos({ todos, deleteTodos, update }) {
     console.log(todos)

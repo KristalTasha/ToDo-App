@@ -1,0 +1,25 @@
+.login-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 20em;
+    gap: 2em;
+
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.login-title{
+    text-align: center;
+}
+
+.login-nav{
+    display: flex;
+    gap: 1em;
+}

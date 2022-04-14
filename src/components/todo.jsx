@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import './todo.css'
+import './styles/todo.css'
 
 export default function Todo({todo, deleteTodos, update}) {
 
