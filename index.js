@@ -1,10 +1,12 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const path = require("path");
 const cors = require("cors");
 const { addTodo, fetchTodos, fetchTodo, deleteTodo, updateTodo } = require('./controller/todo_controller')
 
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 8000;
 
 const app = express();
 
@@ -15,10 +17,10 @@ app.use(morgan("dev"));
 app.use(cors());
 
 //mongodb connection string
-const mongoUrl = "mongodb://localhost:27017/todo-app"
+const mongoURL = process.env.mongoURL
 
 //connect mongoose to the express server
-mongoose.connect(mongoUrl, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(mongoURL, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((result) => {
     if (result) console.log("mongodb connected");
 })
