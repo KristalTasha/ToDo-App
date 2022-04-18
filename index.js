@@ -1,8 +1,10 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv").config();
 const path = require("path");
+const Todos = require('./routes/todo_router')
+const UserReg = require('./routes/user_router');
 const cors = require("cors");
 const { addTodo, fetchTodos, fetchTodo, deleteTodo, updateTodo } = require('./controller/todo_controller')
 
@@ -28,21 +30,8 @@ mongoose.connect(mongoURL, {useNewUrlParser: true, useUnifiedTopology: true})
     console.log(err);
 })
 
-// app.use("/api/todos");
+app.use("/api/todos", Todos);
+app.use('/user', UserReg);
 
-//saving a todo
-app.post('/api/todos', addTodo);
-
-//fetching from the db/server
-app.get('/api/todos', fetchTodos)
-
-//fetching a todo
-app.get('/api/todos/:id', fetchTodo)
-
-//deleting a todo
-app.delete('/api/todos/:id', deleteTodo)
-
-//updating a todo
-app.put('/api/todos/:id', updateTodo)
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
