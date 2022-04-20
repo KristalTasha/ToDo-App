@@ -2,6 +2,7 @@ const Users = require('../model/user_model');
 const bcrypt = require('bcrypt')
 const cookieParser = require('cookie-parser');
 const { generateToken, deleteToken } = require('../handlers/user_handler');
+const { cookie } = require('express/lib/response');
 
 
 const signUp = async (req, res) => {
@@ -59,7 +60,9 @@ const logOut = async (req, res) => {
       if(userLogout){
         const deltoken = deleteToken(userLogout._id)
         res.cookie('jwt', deltoken, {maxAge: 0, httpOnly: true})
-        res.redirect('/user');
+        res.status(201).json()
+        console.log(`${userLogout._id} successfully logged out`)
+        // res.redirect('/api/todos');
       }
         
     } catch(error){

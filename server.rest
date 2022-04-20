@@ -1,7 +1,8 @@
-GET  http://localhosT:7000
+GET  http://localhost:8000/user
 content-type: application/json
 
 {
-    "status": "done"
+    "email": "test2@testing.com",
+    "password": "testing2"
 }
 
