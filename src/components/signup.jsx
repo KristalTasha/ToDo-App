@@ -1,26 +1,42 @@
 import React from 'react'
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom';
+import Blocks from './page-blocks'
 import './styles/login.css'
+import './styles/signup.css'
 
 export default function Signup() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   return (
-    <div className='login-page'>
-      <nav className='login-nav'>
-    <NavLink to="/home">Home</NavLink>
-    <NavLink to="/">Login</NavLink>
-    <NavLink to="/signup">Signup</NavLink>
-     </nav>
+    <div className='signup-page'>
+   
+      <Blocks.Header/>
 
-   <form className='login-form'>
-       <p className='login-title'>Signup</p>
-       <input type="text" placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
-       <input type='password' placeholder='password' onChange={(e) => setEmail(e.target.value)}/>
-       <button action="submit">Signup</button>
-   </form>
-   </div>
+      <form className='signup-form'>
+      <div className='user-logo'>
+      <i class="fa-solid fa-circle-user"></i>
+      </div>
+
+        <div className="form-item">
+          <div className='sign-icon-hold'><i class="fa-solid fa-user"></i></div>
+          <input type="text" placeholder='Email' className='sign-email' onChange={(e) => setEmail(e.target.value)} />
+        </div>
+
+        <div className="form-item">
+          <div className='sign-icon-hold'><i class="fa-solid fa-lock"></i></div>
+          <input type='password' className="sign-pswd" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+        </div>
+
+        <div className="form-tip">
+         <p className='forgot-text'>Already have an account?</p>
+         <Link to="/" className='log-link'>Login</Link>
+        </div>
+
+        
+        <button action="submit" className="sign-submit">Sign Up</button>
+      </form>
+    </div>
   )
 }

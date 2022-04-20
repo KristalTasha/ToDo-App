@@ -7,9 +7,14 @@ export default function Todo({todo, deleteTodos, update}) {
   const [check, setCheck] = useState(false)
 
   function toggleCheck(todo){
-
-    setCheck(true)
-    update(todo.id)
+    if(todo.status === 'Pending'){
+      setCheck(false)
+      update(todo._id)
+    } else if(todo.status === 'Done'){
+      setCheck(true)
+      update(todo._id)
+    }
+   
   
   }
 
@@ -17,7 +22,7 @@ export default function Todo({todo, deleteTodos, update}) {
     <div className='todo-item' style={ todo.status === 'Pending' ? { backgroundColor: 'lightgrey' } : {backgroundColor: 'palegreen'}}>
       <div className='tobedone'>
       {/* <input className='cbox ' type="checkbox" checked={true ? todo.status === 'Done' : todo.status === 'Pending'}></input> */}
-      <input className='cbox ' type="checkbox" onClick={() => toggleCheck(todo)}></input>
+      <input className='cbox ' type="checkbox" onClick={() => toggleCheck(todo)} value={check} checked={true ? todo.status === 'Done' : todo.status === 'Pending'}></input>
       <p style={ todo.status === 'Done' ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{todo.todo}</p>
     </div>
 

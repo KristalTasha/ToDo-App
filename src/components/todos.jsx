@@ -6,25 +6,28 @@ export default function Todos({ todos, deleteTodos, update }) {
     console.log(todos)
     console.log(deleteTodos)
 
-    if (todos.length>0){
+    if (todos.length > 0) {
         return (
 
             <>
-                {
-                    todos.map(todo => (
-                        <div className='todolist'>
+
+                <div className='todolist'>
+
+                    {todos.reverse().map(todo => (
+                     
                             <Todo todo={todo} key={todo.id} deleteTodos={deleteTodos} update={update} />
-                        </div>
+                    
                     ))
-    
-                }
+
+                    }
+                </div>
             </>
-    
-    
+
+
         )
     }
-    else{
+    else {
         return <p className='sorry'>No items to display. Kindly add an item.</p>
     }
-   
+
 }

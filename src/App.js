@@ -3,20 +3,21 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import Todos from './components/todos'
+import Blocks from './components/page-blocks';
 
 function App() {
   const [input, setInput] = useState('')
   const [todos, setTodos] = useState([])
   const [count, setCount] = useState(0)
   const [loading, setLoading] = useState(false);
-  const [loadingg, setLoadingg] = useState(false);
+  // const [loadingg, setLoadingg] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [error, setError] = useState(false);
 
   const addTodo = async () => {
     try {
       setLoading(true)
-      const add = await axios.post('http://localhost:7000/api/todos', {
+      const add = await axios.post('http://localhost:8000/api/todos', {
         todo: input
       })
 
@@ -49,7 +50,7 @@ function App() {
   const deleteTodos = async (id) => {
     try {
       setLoading(true)
-      const todo = await axios.delete(`http://localhost:7000/api/todos/${id}`)
+      const todo = await axios.delete(`http://localhost:8000/api/todos/${id}`)
 
       console.log(todo);
       setLoading(false)
@@ -68,21 +69,21 @@ function App() {
   const update = async (id) => {
 
     try {
-      setLoadingg(true);
-      const todo = await axios.get(`http://localhost:7000/api/todos/${id}`);
+      setLoading(true);
+      const todo = await axios.get(`http://localhost:8000/api/todos/${id}`);
 
       const { data } = todo;
 
-      if (data.status === "pending") {
-        await axios.put(`http://localhost:7000/api/todos/${data._id}`, {
-          status: "done",
+      if (data.status === "Pending") {
+        await axios.put(`http://localhost:8000/api/todos/${data._id}`, {
+          status: "Done",
         });
       } else {
-        await axios.put(`http://localhost:7000/api/todos/${data._id}`, {
-          status: "pending",
+        await axios.put(`http://localhost:8000/api/todos/${data._id}`, {
+          status: "Pending",
         });
       }
-      setLoadingg(false);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -104,21 +105,12 @@ function App() {
     console.log(counting)
   }
 
-  // function Counter(status){
-  //   const counting = todos.filter(done => {
-  //     return (done.status === "Done")
-
-  //   })
-  //   setCount(counting.length)
-  //   console.log(count)
-  // }
-
   useEffect(() => {
     Counter('Done')
     console.log(count)
 
     const fetchTodos = async () => {
-      const todos = await axios.get('http://localhost:7000/api/todos');
+      const todos = await axios.get('http://localhost:8000/api/todos');
       console.log('the todos', todos)
 
       const { data } = todos;
@@ -127,7 +119,7 @@ function App() {
     }
 
     fetchTodos()
-  }, [loading, loadingg]);
+  }, [loading, count]);
 
 
   function Tracker() {
@@ -144,11 +136,9 @@ function App() {
 
   return (
     <div className='page'>
-      <nav className='login-nav'>
-        <NavLink to="/home">Home</NavLink>
-        <NavLink to="/">Login</NavLink>
-        <NavLink to="/signup">Signup</NavLink>
-      </nav>
+   
+      <Blocks.Header/>
+
       <div className='list'>
         <h4>My To-Do List</h4>
         <div className='add-item'>
@@ -162,6 +152,9 @@ function App() {
           <p>Refreshing... {loading}</p>}
         {error && <p>{errorMsg}</p>}
         <Todos todos={todos} deleteTodos={deleteTodos} update={update} />
+      </div>
+      <div className='space'>
+
       </div>
     </div>
   );
