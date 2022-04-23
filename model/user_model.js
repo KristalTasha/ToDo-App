@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { type } = require('express/lib/response')
 
 const { Schema } = mongoose;
 
@@ -14,6 +15,10 @@ const userSchema = new Schema({
         type: String,
         required: [true, "Kindly enter in your password"],
         minlength: [5, 'Password length should exceed 5 characters']
+    },
+    todos: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Todo'
     }
 })
 

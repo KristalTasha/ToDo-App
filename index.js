@@ -35,7 +35,7 @@ mongoose.connect(mongoURL, {useNewUrlParser: true, useUnifiedTopology: true})
 })
 
 app.use("/api/todos", Todos);
-app.use('/user', UserReg);
+app.use('/api/user', UserReg);
 
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

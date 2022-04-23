@@ -14,7 +14,8 @@ const signUp = async (req, res) => {
         const user = await newUser.save();
         const token = generateToken(user._id);
         res.cookie('jwt', token, { maxAge: 3 * 60 * 60 * 24 * 1000, httpOnly: true });
-        res.status(201).json({user})
+        res.status(201).json({message: 'Successfully signed up'})
+        console.log(`Successfully signed up ${user.email}`);
 
     } catch(error){
         console.log(error.message);
@@ -38,13 +39,14 @@ const logIn = async ( req, res ) => {
             if(isSame){
                 const token = generateToken(user._id)
                 res.cookie('jwt', token, {maxAge: 3 * 60 * 60 * 24 * 1000, httpOnly: true });
-                res.status(201).json({user})
+                res.status(201).json({message: 'Successfully logged in'});
+                console.log(`Successfully logged in ${user.email}`)
             } else{
-                //res.json({errors: "Incorrect password"})
+                res.status(401).json({message: "Incorrect password"})
                 console.log("Incorrect password")
             }
         } else{
-            //res.json({errors: "Email does not exist"})
+            res.status(401).json({message: "Email does not exist"})
             console.log("Email does not exist")
         }
 
