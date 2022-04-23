@@ -1,6 +1,7 @@
+import axios from 'axios';
 import React from 'react'
 import { useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import Blocks from './page-blocks';
 import './styles/login.css'
 import './styles/signup.css'
@@ -8,6 +9,33 @@ import './styles/signup.css'
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const history = useNavigate();
+
+  const login = async (e) => {
+    try{
+      e.preventDefault();
+      const response = await axios.post(
+        "http://localhost:8000/api/user/login",
+        {
+          email,
+          password
+        },
+        {withCredentials: true}
+      );
+
+      const { data } = response;
+      console.log('data from response ---', data)
+      console.log('response ---', response)
+
+      if(response.data){
+        console.log('data after if statement ---', data)
+        console.log('response after if statement ---', response)
+        history("/home", {replace: true})
+      }
+    } catch (error){
+      console.log(error);
+    }
+  }
 
   return (
     <div className='login-page'>
@@ -49,7 +77,7 @@ export default function Login() {
         </div>
 
         
-        <button action="submit" className="submit">Login</button>
+        <button action="submit" className="submit" onClick={login}>Login</button>
       </form>
     </div>
   )

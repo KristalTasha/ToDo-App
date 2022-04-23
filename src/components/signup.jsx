@@ -1,6 +1,7 @@
+import axios from 'axios';
 import React from 'react'
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Blocks from './page-blocks'
 import './styles/login.css'
 import './styles/signup.css'
@@ -8,6 +9,30 @@ import './styles/signup.css'
 export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
+  const signup = async (e) => {
+    try{
+      e.preventDefault();
+
+      const success = await axios.post(
+        'http://localhost:8000/api/user/signup',
+        {
+          email,
+          password
+        },
+        { withCredentials: true }
+        );
+
+      const { data } = success;
+
+      if(success.data){
+        navigate('/', {replace: true})
+      }
+    } catch(error){
+      console.log(error)
+    }
+  }
 
   return (
     <div className='signup-page'>
@@ -35,7 +60,7 @@ export default function Signup() {
         </div>
 
         
-        <button action="submit" className="sign-submit">Sign Up</button>
+        <button action="submit" className="sign-submit" onClick={signup}>Sign Up</button>
       </form>
     </div>
   )
