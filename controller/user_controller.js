@@ -56,16 +56,30 @@ const logIn = async ( req, res ) => {
 
 }
 
+
+
+// const logOut = async (req, res) => {
+//     try{
+//         const userLogout = Users.findById(req.params.id)
+//       if(userLogout){
+//         const deltoken = deleteToken(userLogout._id)
+//         res.cookie('jwt', deltoken, {maxAge: 0, httpOnly: true})
+//         res.status(201).json()
+//         console.log(`${userLogout._id} successfully logged out`)
+//         // res.redirect('/api/todos');
+//       }
+        
+//     } catch(error){
+//         console.log(error.message)
+//     }
+// }
+
+
 const logOut = async (req, res) => {
     try{
-        const userLogout = Users.findById(req.params.id)
-      if(userLogout){
-        const deltoken = deleteToken(userLogout._id)
-        res.cookie('jwt', deltoken, {maxAge: 0, httpOnly: true})
+        res.cookie(null)
         res.status(201).json()
-        console.log(`${userLogout._id} successfully logged out`)
-        // res.redirect('/api/todos');
-      }
+        console.log('User successfully logged out')
         
     } catch(error){
         console.log(error.message)
