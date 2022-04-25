@@ -1,0 +1,14 @@
+.logout{
+    border: none;
+    background-color: indigo;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 0.8em;
+}
+
+.logout:hover{
+    background-color: rgb(185, 96, 248); 
+    color: indigo;
+
+}

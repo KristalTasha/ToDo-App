@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 import { useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import Blocks from './page-blocks'
+import { Link, useNavigate } from 'react-router-dom'
 import './styles/login.css'
 import './styles/signup.css'
 
@@ -26,8 +25,8 @@ export default function Signup() {
 
       const { data } = success;
 
-      if(success.data){
-        navigate('/', {replace: true})
+      if(data){
+        navigate('/login', {replace: true})
       }
     } catch(error){
       console.log(error)
@@ -36,8 +35,6 @@ export default function Signup() {
 
   return (
     <div className='signup-page'>
-   
-      <Blocks.Header/>
 
       <form className='signup-form'>
       <div className='user-logo'>

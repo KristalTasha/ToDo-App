@@ -1,0 +1,57 @@
+
+.page{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    align-items: center;
+    /* background-color:  rgba(33,40,112,0.5779353977919293) */
+    background: rgb(23,162,234);
+    background: linear-gradient(155deg, rgba(23,162,234,0.46589057986475846) 8%, rgba(213,23,234,0.46589057986475846) 28%, rgba(219,230,28,0.15216508966867992) 65%, rgba(149,32,227,0.7572071064754027) 100%);
+    /* background: rgb(13,58,138);
+    background: linear-gradient(215deg, rgba(13,58,138,0.5079073865874475) 21%, rgba(23,212,234,0.46589057986475846) 52%, rgba(33,40,112,0.5779353977919293) 82%); */
+  }
+  
+  .list{
+    width: 80%;
+    margin-top: 3em;
+    display: flex;
+    border-radius: 15px;
+    flex-direction: column;
+    align-items: center;
+    background-color:rgba(40, 40, 63, 0.5);
+    box-shadow: 1px 1px 3px dimgray;
+    padding-bottom: 2.5em;
+  }
+  
+  
+  .add-item{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1em;
+    gap: 1em;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .add{
+    height: 3em;
+    width: 9em;
+    background-color:rgb(40, 40, 63);
+    border: none;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .new{
+    width: 350px;
+    border-radius: 8px;
+    padding-left: 5px;
+    outline: none;
+    border: 1px solid black;
+  }
+  
+  .space{
+    height: 3em;
+  }
+  

@@ -2,15 +2,16 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
-import Blocks from './page-blocks';
 import './styles/login.css'
 import './styles/signup.css'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [person, setPerson] = useState(false)
   const history = useNavigate();
-
+  
+  
   const login = async (e) => {
     try{
       e.preventDefault();
@@ -22,25 +23,30 @@ export default function Login() {
         },
         {withCredentials: true}
       );
-
+  
       const { data } = response;
       console.log('data from response ---', data)
       console.log('response ---', response)
-
-      if(response.data){
+  
+      if(data){
         console.log('data after if statement ---', data)
         console.log('response after if statement ---', response)
+        setPerson(true);
+        console.log('the person---', person)
         history("/home", {replace: true})
+        
       }
+  
+  
     } catch (error){
       console.log(error);
     }
   }
+  
+  
 
   return (
     <div className='login-page'>
-
-      <Blocks.Header/>
 
       <form className='login-form'>
       <div className='user-logo'>
