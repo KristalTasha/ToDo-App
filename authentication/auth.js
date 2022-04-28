@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports.authUser = (req, res, next) => {
-    const token = req.cookie.jwt
+    console.log('req.cookies ---- ', req.cookies)
+    const token = req.cookies.jwt
     console.log('the token---', token)
 
     if(token){

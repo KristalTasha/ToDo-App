@@ -1,8 +1,7 @@
-GET  http://localhost:8000/user/625fd4ad9bee9ba34af1bc96
+GET   http://localhost:8000/api/user/todos/62692725aebcee6c8606a051
 content-type: application/json
 
 {
-    "email": "test4@testing.com",
-    "password": "testing4"
+    "todo": "eat"
 }
 

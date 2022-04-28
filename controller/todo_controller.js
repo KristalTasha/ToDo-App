@@ -1,18 +1,49 @@
+const { findById } = require("../model/user_model");
+const User = require("../model/user_model");
 const { Todo } = require("./../model/todo_model")
 
 const addTodo = async (req, res) => {
+    const { id } = req.params;
     const { todo } = req.body;
 
     const data = {
         todo
-    };
+    }
 
-    const dataToStore = new Todo(data);
+    const fullData = { ...data, user: id }
 
-    const saveData = await dataToStore.save();
+    try{
+        const dataToStore = new Todo(fullData);
+        const saveData = await dataToStore.save();
+        const fetchUser = await User.findById(id);
+        // console.log(fetchUser)
+        // res.send(fetchUser)
+    
+        fetchUser.todos.push(saveData);
+        await fetchUser.save()
+        res.json(fetchUser)
 
-    res.status(201).json(saveData);
-};
+    } catch(error){
+        console.log(error)
+    }
+
+   
+
+}
+
+// const addTodo = async (req, res) => {
+//     const { todo } = req.body;
+
+//     const data = {
+//         todo
+//     };
+
+//     const dataToStore = new Todo(data);
+
+//     const saveData = await dataToStore.save();
+
+//     res.status(201).json(saveData);
+// };
 
 const fetchTodos = async (req, res) => {
     try {
@@ -53,10 +84,18 @@ const updateTodo = async (req, res) => {
     }
 }
 
+ const todoByUser = async (req, res) =>{
+    const { todoId } = req.params;
+    const todo = await Todo.findById(todoId).populate('user');
+    res.send(todo)
+    console.log('user who set todo--- ', todo.user.email)
+ }
+
 module.exports = {
     addTodo,
     fetchTodos,
     fetchTodo,
     deleteTodo ,
-    updateTodo
+    updateTodo, 
+    todoByUser
 }

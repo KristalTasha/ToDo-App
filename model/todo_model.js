@@ -8,6 +8,10 @@ const TodoSchema = new Schema({
     status: {
         type: String,
         default: "Pending"
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, {timestamps: true})
 

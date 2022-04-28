@@ -11,7 +11,12 @@ const signUp = async (req, res) => {
 
     try {
         const newUser = new Users(req.body);
+
+        const salt = await bcrypt.genSalt();
+        newUser.password = await bcrypt.hash(newUser.password, salt);              
+
         const user = await newUser.save();
+
         const token = generateToken(user._id);
         res.cookie('jwt', token, { maxAge: 3 * 60 * 60 * 24 * 1000, httpOnly: true });
         res.status(201).json({message: 'Successfully signed up'})
@@ -39,7 +44,7 @@ const logIn = async ( req, res ) => {
             if(isSame){
                 const token = generateToken(user._id)
                 res.cookie('jwt', token, {maxAge: 3 * 60 * 60 * 24 * 1000, httpOnly: true });
-                res.status(201).json({message: 'Successfully logged in'});
+                res.status(201).json({message: 'Successfully logged in', userId: user._id, userEmail: user.email});
                 console.log(`Successfully logged in ${user.email}`)
             } else{
                 res.status(401).json({message: "Incorrect password"})
@@ -58,16 +63,28 @@ const logIn = async ( req, res ) => {
 
 
 
+const logOut = async (req, res) => {
+    try{
+        const userLogout = Users.findById(req.params.id)
+      if(userLogout){
+        const deltoken = deleteToken(userLogout._id)
+        res.cookie('jwt', deltoken, {maxAge: 0, httpOnly: true})
+        res.status(201).json()
+        console.log(`${userLogout._id} successfully logged out`)
+        // res.redirect('/api/todos');
+      }
+        
+    } catch(error){
+        console.log(error.message)
+    }
+}
+
+
 // const logOut = async (req, res) => {
 //     try{
-//         const userLogout = Users.findById(req.params.id)
-//       if(userLogout){
-//         const deltoken = deleteToken(userLogout._id)
-//         res.cookie('jwt', deltoken, {maxAge: 0, httpOnly: true})
+//         res.cookie('jwt', deleteToken, {maxAge: -1, httpOnly: true})
 //         res.status(201).json()
-//         console.log(`${userLogout._id} successfully logged out`)
-//         // res.redirect('/api/todos');
-//       }
+//         console.log('User successfully logged out')
         
 //     } catch(error){
 //         console.log(error.message)
@@ -75,19 +92,17 @@ const logIn = async ( req, res ) => {
 // }
 
 
-const logOut = async (req, res) => {
-    try{
-        res.cookie(null)
-        res.status(201).json()
-        console.log('User successfully logged out')
-        
-    } catch(error){
-        console.log(error.message)
-    }
+const userTodos = async (req, res) => {
+    const {id } = req.params
+    const user = await Users.findById(id).populate("todos")
+    // const userTodoList = user.populate("todos");
+    res.send(user.todos)
+
 }
 
 module.exports = {
     signUp,
     logIn,
-    logOut
+    logOut,
+    userTodos
 }

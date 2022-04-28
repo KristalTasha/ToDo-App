@@ -3,10 +3,10 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const path = require("path");
+const cookieParser = require('cookie-parser');
 const Todos = require('./routes/todo_router')
 const UserReg = require('./routes/user_router');
 const cors = require("cors");
-const { addTodo, fetchTodos, fetchTodo, deleteTodo, updateTodo } = require('./controller/todo_controller')
 
 const PORT = process.env.PORT || 8000;
 
@@ -16,10 +16,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 app.use(morgan("dev"));
+app.use(cookieParser())
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000',
-    methods: ['*']
+    methods: 'GET, POST, PUT, DELETE'
 }));
 
 //mongodb connection string
