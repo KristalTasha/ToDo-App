@@ -13,13 +13,16 @@ function Home() {
   // const [loadingg, setLoadingg] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [error, setError] = useState(false);
+  const theUser = JSON.parse(window.localStorage.getItem('logged'))
 
   const addTodo = async () => {
     try {
       setLoading(true)
-      const add = await axios.post('http://localhost:8000/api/todos', {
+      
+
+      const add = await axios.post(`http://localhost:8000/api/todos/add-todo/${theUser.userId}`, {
         todo: input
-      })
+      }, {withCredentials: true })
 
       setInput('');
 
@@ -38,7 +41,8 @@ function Home() {
   const deleteTodos = async (id) => {
     try {
       setLoading(true)
-      const todo = await axios.delete(`http://localhost:8000/api/todos/${id}`)
+      const todo = await axios.delete(`http://localhost:8000/api/todos/${id}`, 
+      {withCredentials: true })
 
       console.log(todo);
       setLoading(false)
@@ -58,18 +62,19 @@ function Home() {
 
     try {
       setLoading(true);
-      const todo = await axios.get(`http://localhost:8000/api/todos/${id}`);
+      const todo = await axios.get(`http://localhost:8000/api/todos/${id}`, {withCredentials: true });
 
       const { data } = todo;
 
       if (data.status === "Pending") {
         await axios.put(`http://localhost:8000/api/todos/${data._id}`, {
           status: "Done",
-        });
+        }, {withCredentials: true });
       } else {
         await axios.put(`http://localhost:8000/api/todos/${data._id}`, {
           status: "Pending",
-        });
+        },
+        {withCredentials: true });
       }
       setLoading(false);
     } catch (error) {
@@ -98,7 +103,7 @@ function Home() {
     console.log(count)
 
     const fetchTodos = async () => {
-      const todos = await axios.get('http://localhost:8000/api/todos');
+      const todos = await axios.get(`http://localhost:8000/api/user/todos/${theUser.userId}`, {withCredentials: true });
       console.log('the todos', todos)
 
       const { data } = todos;

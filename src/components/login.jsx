@@ -8,7 +8,7 @@ import './styles/signup.css'
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [person, setPerson] = useState(false)
+  // const [person, setPerson] = useState(false)
   const history = useNavigate();
   
   
@@ -26,13 +26,12 @@ export default function Login() {
   
       const { data } = response;
       console.log('data from response ---', data)
-      console.log('response ---', response)
   
-      if(data){
+      if(data.userId){
         console.log('data after if statement ---', data)
-        console.log('response after if statement ---', response)
-        setPerson(true);
-        console.log('the person---', person)
+        // setPerson(true);
+        window.localStorage.setItem('logged', JSON.stringify(data));
+        // console.log('the person---', person)
         history("/home", {replace: true})
         
       }
