@@ -60,11 +60,21 @@ const fetchTodo = async (req, res) => {
     res.status(200).json(todo);
 }
 
+//former
+// const deleteTodo = async (req, res) => {
+//     const { id } = req.params
+//     const todo = await Todo.findByIdAndDelete(id)
+//     res.status(200).json({message: `${todo} deleted successfully`})
+// }
+
+//trying to delete from TodoSchema and UserSchema together
 const deleteTodo = async (req, res) => {
     const { id } = req.params
     const todo = await Todo.findByIdAndDelete(id)
+    // const usertodo = await User.findByIdAndDelete({todos: id})
     res.status(200).json({message: `${todo} deleted successfully`})
 }
+
 
 const updateTodo = async (req, res) => {
     try{

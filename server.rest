@@ -1,7 +1,7 @@
-GET   http://localhost:8000/api/user/todos/62692725aebcee6c8606a051
+GET    http://localhost:8000/api/user/todos/626a629f68756d2641c2263b
 content-type: application/json
 
 {
-    "todo": "eat"
+  "todo": "cook stew"
 }
 

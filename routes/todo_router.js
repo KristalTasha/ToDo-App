@@ -17,10 +17,10 @@ router.get('/:id', authUser, fetchTodo)
 router.get('/user/:todoId', todoByUser)
 
 //deleting a todo
-router.delete('/:id', authUser, deleteTodo)
+router.delete('/delete/:id', authUser, deleteTodo)
 
 //updating a todo
-router.put('/:id', authUser, updateTodo)
+router.put('/update/:id', authUser, updateTodo)
 
 
 module.exports = router;
