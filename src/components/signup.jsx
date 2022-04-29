@@ -26,7 +26,7 @@ export default function Signup() {
       const { data } = success;
 
       if(data){
-        navigate('/login', {replace: true})
+        navigate('/', {replace: true})
       }
     } catch(error){
       console.log(error)

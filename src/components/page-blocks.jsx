@@ -9,9 +9,7 @@ function Header({person}) {
 
   const logout = async (e) => {
     try{
-      const exit = await axios.get('http://localhost:8000/api/user/logout/:id',
-      {withCredentials: true }
-      )
+      const exit = await axios.get('/user/logout/:id')
       const { exited } = exit;
 
       if(exit){
@@ -25,9 +23,19 @@ function Header({person}) {
 
   return (
   <nav className='login-nav'>
-    { user ? <button className='logout' onClick={logout}>Logout</button> : <NavLink to="/login" className="login-link">Login</NavLink>  }
-    <NavLink to="/home" className="home-link">Home</NavLink>
-    <NavLink to="/signup" className="signup-link">Signup</NavLink>
+    { user ? <button className='logout' onClick={logout}>Logout</button> :  <div></div>    }
+    
+    { !user ? 
+      <>
+       <NavLink to="/" className="login-link">Login</NavLink>
+        <NavLink to="/home" className="home-link">Home</NavLink>
+        <NavLink to="/signup" className="signup-link">Signup</NavLink>
+        </>
+      :
+        <div>Welcome {user.userEmail}</div>
+      
+    }
+
   </nav>
   )
 }

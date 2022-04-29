@@ -16,12 +16,11 @@ export default function Login() {
     try{
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:8000/api/user/login",
+        "/user/login",
         {
           email,
           password
-        },
-        {withCredentials: true}
+        }
       );
   
       const { data } = response;

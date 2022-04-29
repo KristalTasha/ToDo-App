@@ -19,8 +19,8 @@
     border-radius: 15px;
     flex-direction: column;
     align-items: center;
-    background-color:rgba(40, 40, 63, 0.5);
-    box-shadow: 1px 1px 3px dimgray;
+    /* background-color:rgba(40, 40, 63, 0.5);
+    box-shadow: 1px 1px 3px dimgray; */
     padding-bottom: 2.5em;
   }
   

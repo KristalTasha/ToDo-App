@@ -12,3 +12,11 @@
     color: indigo;
 
 }
+
+.login-link, .sign-link, .home-link{
+    display: block;
+}
+
+.login-link.active, .signup-link.active, .home-link.active{
+    display: none;
+}

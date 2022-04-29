@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
@@ -9,16 +10,20 @@ import Auth from './auth/auth';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
+axios.defaults.baseURL = 'http://localhost:8000/api'
+axios.defaults.withCredentials = true;
 
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+
         <Route path='/' element={<App />}>
           <Route index element={<Login />} />
-          <Route path="/login" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/signup" element={<Signup />} />
+
           <Route element={<Auth/>}>
           <Route path="/home" element={<Home />} />
           </Route>
