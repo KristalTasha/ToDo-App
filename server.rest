@@ -1,7 +1,10 @@
-GET    http://localhost:8000/api/user/todos/626a629f68756d2641c2263b
+DELETE http://localhost:8000/api/todos/delete/62728055edf4ee91b0533e13/627249edbe7a52aa4b8cbc9e
 content-type: application/json
 
 {
-  "todo": "cook stew"
+  "email": "tester1@test.com",
+  "password": "tester1"
 }
+
+
 

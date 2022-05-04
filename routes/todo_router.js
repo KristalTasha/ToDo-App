@@ -11,13 +11,13 @@ router.post('/add-todo/:id', authUser, addTodo);
 router.get('/', fetchTodos)
 
 //fetching a todo
-router.get('/:id', authUser, fetchTodo)
+router.get('/fetch-todo/:id', authUser, fetchTodo)
 
 //fetching todo and the user details of that todo
 router.get('/user/:todoId', todoByUser)
 
 //deleting a todo
-router.delete('/delete/:id', authUser, deleteTodo)
+router.delete('/delete/:id/:userId', authUser, deleteTodo)
 
 //updating a todo
 router.put('/update/:id', authUser, updateTodo)

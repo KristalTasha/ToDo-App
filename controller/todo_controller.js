@@ -1,4 +1,3 @@
-const { findById } = require("../model/user_model");
 const User = require("../model/user_model");
 const { Todo } = require("./../model/todo_model")
 
@@ -70,9 +69,30 @@ const fetchTodo = async (req, res) => {
 //trying to delete from TodoSchema and UserSchema together
 const deleteTodo = async (req, res) => {
     const { id } = req.params
+    const uId = req.params.userId
     const todo = await Todo.findByIdAndDelete(id)
-    // const usertodo = await User.findByIdAndDelete({todos: id})
+
     res.status(200).json({message: `${todo} deleted successfully`})
+    
+    //finding user of todos to be deleted
+    const usertodo = await User.findById(uId)
+    //console.log('user todos of deleted todo', usertodo.todos)
+    
+    usertodo.todos.filter(theTodo => {
+
+        //console.log('user todo before if statement--', theTodo.valueOf(), 'todoId--', id)
+        if(theTodo.valueOf() === id){
+            console.log('theTodo', theTodo.valueOf())
+            let theIndex = usertodo.todos.indexOf(theTodo.valueOf())
+            console.log('the index', theIndex)
+            usertodo.todos.splice(theIndex, 1);
+            usertodo.save();
+            console.log('user todos modified successfully')
+
+        } 
+    })
+
+   
 }
 
 
@@ -86,8 +106,13 @@ const updateTodo = async (req, res) => {
         }
 
         const todo = await Todo.updateOne({_id: id }, update);
+        console.log('todo await response', todo)
+        console.log('update object', update)
 
         res.status(200).json(todo);
+        // res.status(200).json(update);
+        // res.json(update);
+
     } catch (error) {
         res.status(500).json({err: error.message})
         console.log(error.message);
