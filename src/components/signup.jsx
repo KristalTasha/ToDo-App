@@ -8,6 +8,7 @@ import './styles/signup.css'
 export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [emailErr, setEmailErr] = useState('')
   const navigate = useNavigate()
 
   const signup = async (e) => {
@@ -29,7 +30,8 @@ export default function Signup() {
         navigate('/', {replace: true})
       }
     } catch(error){
-      console.log(error)
+      console.log('the error', error.response.data)
+      setEmailErr(error.response.data)
     }
   }
 
@@ -45,6 +47,8 @@ export default function Signup() {
           <div className='sign-icon-hold'><i class="fa-solid fa-user"></i></div>
           <input type="text" placeholder='Email' className='sign-email' onChange={(e) => setEmail(e.target.value)} />
         </div>
+
+        { emailErr ? <span className='email-error'>{emailErr}</span> : null}
 
         <div className="form-item">
           <div className='sign-icon-hold'><i class="fa-solid fa-lock"></i></div>

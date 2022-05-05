@@ -21,7 +21,7 @@
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     width: 25%;
-    height: 18em;
+    /* height: 18em; */
     padding-left: 3%;
     padding-right: 3%;
   
@@ -84,3 +84,8 @@
     .log-link:hover{
         color: orchid;
     }
+
+.email-error{
+    font-size: 0.6em;
+    color: brown;
+}

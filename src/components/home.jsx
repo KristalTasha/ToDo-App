@@ -41,7 +41,7 @@ function Home() {
   const deleteTodos = async (id) => {
     try {
       setLoading(true)
-      const todo = await axios.delete(`/todos/delete/${id}`)
+      const todo = await axios.delete(`/todos/delete/${id}/${theUser.userId}`)
 
       console.log(todo);
       setLoading(false)
@@ -61,16 +61,19 @@ function Home() {
 
     try {
       setLoading(true);
-      const todo = await axios.get(`/todos/update/${id}`);
+      const todo = await axios.get(`/todos/fetch-todo/${id}`);
 
       const { data } = todo;
+      console.log('todo json response from api', todo);
+      console.log('data', data);
 
+      
       if (data.status === "Pending") {
-        await axios.put(`/todos/${data._id}`, {
+        await axios.put(`/todos/update/${data._id}`, {
           status: "Done",
         });
       } else {
-        await axios.put(`/todos/${data._id}`, {
+        await axios.put(`/todos/update/${data._id}`, {
           status: "Pending",
         });
       }
@@ -87,18 +90,18 @@ function Home() {
 
   }
 
-  function Counter(status) {
+  function Counter(stat) {
     const counting = todos.filter(done => {
-      return (done.status === status)
+      return (done.status === stat)
 
     })
     setCount(counting.length)
-    console.log(counting)
+    console.log('counting length', counting.length)
   }
 
   useEffect(() => {
     Counter('Done')
-    console.log(count)
+    console.log('the count', count)
 
     const fetchTodos = async () => {
       const todos = await axios.get(`/user/todos/${theUser.userId}`);
@@ -110,7 +113,7 @@ function Home() {
     }
 
     fetchTodos()
-  }, [loading, count]);
+  }, [loading, count, theUser.userId]);
 
 
   function Tracker() {
