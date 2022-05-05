@@ -24,6 +24,15 @@ const signUp = async (req, res) => {
 
     } catch(error){
         console.log(error.message);
+        if (error.message.includes('duplicate')){
+            res.status(409).json('Email already exists');
+            
+        } else if(error.message.includes('validation failed')){
+            console.log('the error', error.errors.email.message)
+            res.status(401).json(error.errors.email.message);
+        }
+            
+        
     }
 
 
