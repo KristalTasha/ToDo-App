@@ -85,7 +85,7 @@
         color: orchid;
     }
 
-.email-error{
+.email-error, .pswd-error{
     font-size: 0.6em;
     color: brown;
 }

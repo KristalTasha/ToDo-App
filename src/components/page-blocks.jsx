@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react'
+import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import './styles/page-blocks.css';
 
@@ -23,7 +24,7 @@ function Header({person}) {
 
   return (
   <nav className='login-nav'>
-    { user ? <button className='logout' onClick={logout}>Logout</button> :  <div></div>    }
+   
     
     { !user ? 
       <>
@@ -32,13 +33,34 @@ function Header({person}) {
         <NavLink to="/signup" className="signup-link">Signup</NavLink>
         </>
       :
-        <div>Welcome {user.userEmail}</div>
-      
+      <>
+      <button className='reset'>Reset Password</button>
+      <button className='logout' onClick={logout}>Logout</button>
+      <div>Welcome {user.userEmail}</div>
+        </>
     }
 
   </nav>
   )
 }
+
+
+function PassResetForm(){
+  const [userEmail, setUserEmail] = useState('')
+
+return(
+  <div className='mod-cont'>
+    <p>A link to reset your password will be sent to you email address.</p>
+    <p>Kindly confirm your email address</p>
+    <form>
+    <input type='text' className='reset-email' placeholder='email' onChange={(e) => setUserEmail(e.target.value)}/>
+     <button action='submit' className='reset-submit'>Submit</button>
+    </form>
+  </div>
+)
+}
+
+
 
 export default {
     Header

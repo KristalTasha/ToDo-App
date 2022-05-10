@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './styles/login.css'
 import './styles/signup.css'
@@ -9,6 +9,7 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emailErr, setEmailErr] = useState('')
+  const [pswdErr, setPswdErr] = useState('')
   const navigate = useNavigate()
 
   const signup = async (e) => {
@@ -30,8 +31,17 @@ export default function Signup() {
         navigate('/', {replace: true})
       }
     } catch(error){
-      console.log('the error', error.response.data)
-      setEmailErr(error.response.data)
+      let theError = error.response.data
+
+      if(theError.includes('Email') || theError.includes('email')){
+        console.log('the error', error.response.data)
+        setEmailErr(error.response.data)
+
+      } else if (theError.includes('Password') || theError.includes('password')){
+        console.log('the error', error.response.data)
+        setPswdErr(error.response.data)
+      }
+     
     }
   }
 
@@ -48,12 +58,20 @@ export default function Signup() {
           <input type="text" placeholder='Email' className='sign-email' onChange={(e) => setEmail(e.target.value)} />
         </div>
 
-        { emailErr ? <span className='email-error'>{emailErr}</span> : null}
+        { 
+        
+          emailErr ? <span className='email-error'>{emailErr}</span> : null
+      
+        }
 
         <div className="form-item">
           <div className='sign-icon-hold'><i class="fa-solid fa-lock"></i></div>
-          <input type='password' className="sign-pswd" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+          <input type='password' className="sign-pswd" placeholder='Password' minlength='5' onChange={(e) => setPassword(e.target.value)} />
         </div>
+
+        { 
+          pswdErr ? <span className='pswd-error'>{pswdErr}</span> : null
+        }
 
         <div className="form-tip">
          <p className='forgot-text'>Already have an account?</p>

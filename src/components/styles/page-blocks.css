@@ -20,3 +20,17 @@
 .login-link.active, .signup-link.active, .home-link.active{
     display: none;
 }
+
+.reset{
+    border: none;
+    background-color: rgb(167, 166, 167);
+    color: rgb(165, 24, 48);
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 0.8em; 
+}
+
+.reset:hover{
+    background-color: rgb(93, 93, 93);
+    color: rgb(237, 138, 155);
+}
