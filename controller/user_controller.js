@@ -12,8 +12,8 @@ const signUp = async (req, res) => {
     try {
         const newUser = new Users(req.body);
 
-        const salt = await bcrypt.genSalt();
-        newUser.password = await bcrypt.hash(newUser.password, salt);              
+        // const salt = await bcrypt.genSalt();
+        // newUser.password = await bcrypt.hash(newUser.password, salt);              
 
         const user = await newUser.save();
 
@@ -27,9 +27,15 @@ const signUp = async (req, res) => {
         if (error.message.includes('duplicate')){
             res.status(409).json('Email already exists');
             
-        } else if(error.message.includes('validation failed')){
-            console.log('the error', error.errors.email.message)
+        } 
+         if(error.message.includes('validation failed: email')){
+            console.log('the email error---', error.errors.email.message)
             res.status(401).json(error.errors.email.message);
+
+        } 
+         if(error.message.includes('Password length')){
+            console.log('the password error---', error.errors.password.message )
+            res.status(401).json(error.errors.password.message);
         }
             
         
@@ -68,6 +74,46 @@ const logIn = async ( req, res ) => {
         console.log(error.message)
     }
 
+}
+
+const resetPassword = async (req, res) => {
+    try{
+        const { email, password, newPassword } = req.body 
+
+        const user = await Users.findOne({email})
+
+     
+        if(user){
+            const isSame = await bcrypt.compare(password, user.password)
+
+            let found = user.email;
+
+            const updating = {
+                password: newPassword
+            }
+    
+
+            if(isSame){
+                const salt = await bcrypt.genSalt();
+                updating.password = await bcrypt.hash(updating.password, salt);  
+                const newpass = await Users.updateOne({email: found }, updating);
+                
+               // newpass.save()            
+
+                res.status(200).json({message: 'User password successfully changed', newpass})
+
+
+            } else{
+                res.status(401).json({message: 'Password is wrong'})
+            }
+        } else{
+            res.status(401).json({message: 'Email does not exist'})
+        }
+
+
+    } catch(error){
+        console.log(error)
+    }
 }
 
 
@@ -113,5 +159,6 @@ module.exports = {
     signUp,
     logIn,
     logOut,
-    userTodos
+    userTodos, 
+    resetPassword
 }

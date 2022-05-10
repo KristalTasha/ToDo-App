@@ -70,23 +70,24 @@ const fetchTodo = async (req, res) => {
 const deleteTodo = async (req, res) => {
     const { id } = req.params
     const uId = req.params.userId
-    const todo = await Todo.findByIdAndDelete(id)
 
+    const todo = await Todo.findByIdAndDelete(id)
     res.status(200).json({message: `${todo} deleted successfully`})
     
     //finding user of todos to be deleted
-    const usertodo = await User.findById(uId)
-    //console.log('user todos of deleted todo', usertodo.todos)
+    const user = await User.findById(uId)
     
-    usertodo.todos.filter(theTodo => {
+    
+    user.todos.filter(theTodo => {
 
-        //console.log('user todo before if statement--', theTodo.valueOf(), 'todoId--', id)
+        console.log('user todo before if statement--', theTodo.valueOf(), 'todoId--', id)
         if(theTodo.valueOf() === id){
-            console.log('theTodo', theTodo.valueOf())
-            let theIndex = usertodo.todos.indexOf(theTodo.valueOf())
-            console.log('the index', theIndex)
-            usertodo.todos.splice(theIndex, 1);
-            usertodo.save();
+            //console.log('theTodo', theTodo.valueOf())
+
+            let theIndex = user.todos.indexOf(theTodo.valueOf())
+           // console.log('the index', theIndex)
+            user.todos.splice(theIndex, 1);
+            user.save();
             console.log('user todos modified successfully')
 
         } 

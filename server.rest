@@ -1,9 +1,9 @@
-DELETE http://localhost:8000/api/todos/delete/62728055edf4ee91b0533e13/627249edbe7a52aa4b8cbc9e
+DELETE http://localhost:8000/api/todos/delete/6272f9eafe983efca0e042fa/6272f9c7fe983efca0e042e6
 content-type: application/json
 
 {
-  "email": "tester1@test.com",
-  "password": "tester1"
+  "email": "test1@test.com",
+  "password": "test1"
 }
 
 
