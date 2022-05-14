@@ -1,10 +1,34 @@
-DELETE http://localhost:8000/api/todos/delete/6272f9eafe983efca0e042fa/6272f9c7fe983efca0e042e6
+# POST  http://localhost:8000/api/user/login
+# content-type: application/json
+
+# {
+#   "email": "test4@test.com",
+#   "password": "test44"
+# }
+
+POST  http://localhost:8000/mailer
 content-type: application/json
 
 {
-  "email": "test1@test.com",
-  "password": "test1"
+  "email": "kristilaing@gmail.com",
+  "message": "Muahahaa"
 }
 
+# PUT  http://localhost:8000/api/user/reset-password
+# content-type: application/json
 
+# {
+#   "email": "test4@test.com",
+#   "password": "test4",
+#   "newPassword": "test44"
+# }
+
+
+# POST  http://localhost:8000/api/user/signup
+# content-type: application/json
+
+# {
+#   "email": "test4@test.com",
+#   "password": "test4"
+# }
 

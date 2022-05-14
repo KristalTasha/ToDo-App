@@ -45,39 +45,6 @@ app.use("/api/todos", Todos);
 app.use('/api/user', UserReg);
 
 
-app.post('/mailer', (req, res) => {
-    const {
-        email,
-        message
-    } = req.body
-
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'kristilaing@gmail.com',
-            pass: 'rkirbehsbslfqsis'
-        }
-    });
-
-    const mailOptions = {
-      
-        to: `${email}`,
-        subject: 'Sending Email using Node.js',
-        // text: 'Testing nodemailer!',
-        html: `<div>${message}</div>`
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
-    res.send('We have sent an emial to your mail. Kindly check and respond.');
-})
-
 
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

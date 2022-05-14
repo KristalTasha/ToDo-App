@@ -1,6 +1,7 @@
 const Users = require('../model/user_model');
 const bcrypt = require('bcrypt')
 const cookieParser = require('cookie-parser');
+const nodemailer = require('nodemailer');
 const { generateToken, deleteToken } = require('../handlers/user_handler');
 const { cookie } = require('express/lib/response');
 
@@ -76,6 +77,48 @@ const logIn = async ( req, res ) => {
 
 }
 
+
+const sendPassResetMail = (req, res) => {
+
+    const {
+        email
+    } = req.body
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'kristilaing@gmail.com',
+            pass: 'rkirbehsbslfqsis'
+        }
+    });
+
+    const mailOptions = {
+      
+        to: `${email}`,
+        subject: 'Sending Email using Node.js',
+        // text: 'Testing nodemailer!',
+        html: `<div>
+        <p>Follow link below to reset your password</p>
+        <p>http://localhost:3000/reset-password</p>
+        </div>`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+    res.send('We have sent an emial to your mail. Kindly check and respond.');
+
+
+}
+
+
+
+
 const resetPassword = async (req, res) => {
     try{
         const { email, password, newPassword } = req.body 
@@ -104,9 +147,11 @@ const resetPassword = async (req, res) => {
 
 
             } else{
+                console.log('Password is wrong')
                 res.status(401).json({message: 'Password is wrong'})
             }
         } else{
+            console.log('Email does not exist')
             res.status(401).json({message: 'Email does not exist'})
         }
 
@@ -160,5 +205,6 @@ module.exports = {
     logIn,
     logOut,
     userTodos, 
+    sendPassResetMail,
     resetPassword
 }
