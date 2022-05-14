@@ -7,6 +7,7 @@ import Login from './components/login';
 import Signup from './components/signup';
 import Home from './components/home';
 import Auth from './auth/auth';
+import Blocks from './components/page-blocks';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
@@ -27,6 +28,11 @@ ReactDOM.render(
           <Route element={<Auth/>}>
           <Route path="/home" element={<Home />} />
           </Route>
+
+          <Route path='/send-mail' element={<Blocks.SendEmailForm/>} />
+
+          <Route path='/reset-password' element={<Blocks.PassResetForm/>} />
+
         </Route>
       </Routes>
     </BrowserRouter>
