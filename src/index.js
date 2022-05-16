@@ -7,12 +7,14 @@ import Login from './components/login';
 import Signup from './components/signup';
 import Home from './components/home';
 import Auth from './auth/auth';
+import PassResetForm from './components/password-reset';
 import Blocks from './components/page-blocks';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
 axios.defaults.baseURL = 'http://localhost:8000/api'
 axios.defaults.withCredentials = true;
+const user = JSON.parse(window.localStorage.getItem('logged'))
 
 
 ReactDOM.render(
@@ -31,7 +33,13 @@ ReactDOM.render(
 
           <Route path='/send-mail' element={<Blocks.SendEmailForm/>} />
 
-          <Route path='/reset-password' element={<Blocks.PassResetForm/>} />
+          {
+            user ?
+            <Route path='/reset-password' element={<PassResetForm/>} />
+            :
+            <Route path='/reset-password/:resetToken' element={<PassResetForm/>} />
+          }
+          
 
         </Route>
       </Routes>

@@ -9,6 +9,8 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   // const [person, setPerson] = useState(false)
+  const [emailLogErr, setLoginEmailErr] = useState('')
+  const [pswdLogErr, setLoginPswdErr] = useState('')
   const history = useNavigate();
   
   
@@ -37,7 +39,20 @@ export default function Login() {
   
   
     } catch (error){
-      console.log(error);
+      console.log('the error', error.response.data);
+      
+      let theError = error.response.data
+
+      if(theError.includes('Email') || theError.includes('email')){
+        // console.log('the error', error.response.data)
+        setLoginEmailErr(theError)
+
+      } else if (theError.includes('Password') || theError.includes('password')){
+        // console.log('the error', error.response.data)
+        setLoginPswdErr(theError)
+      }
+     
+
     }
   }
   
@@ -53,13 +68,21 @@ export default function Login() {
 
         <div className="form-item">
           <div className='icon-hold'><i class="fa-solid fa-user"></i></div>
-          <input type="text" placeholder='Email' className='email' onChange={(e) => setEmail(e.target.value)} />
+          <input type="text" placeholder='Email' className='email' onChange={(e) => setEmail(e.target.value)} required/>
         </div>
+
+        { 
+         emailLogErr ? <span className='email-error'>{emailLogErr}</span> : null
+        }
 
         <div className="form-item">
           <div className='icon-hold'><i class="fa-solid fa-lock"></i></div>
           <input type='password' className="pswd" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
         </div>
+        
+        { 
+          pswdLogErr ? <span className='pswd-error'>{pswdLogErr}</span> : null
+        }
 
         <div className='tips'>
 
@@ -69,7 +92,8 @@ export default function Login() {
             <p className='rem-text'>Remember me</p>
           </div>
           <div className='forgot'>
-            <p className='forgot-text'>Forgot password?</p>
+            {/* <p className='forgot-text'>Forgot password?</p> */}
+            <Link to='/send-mail' className='forgot-text'>Forgot password?</Link>
           </div>
         </div>
 

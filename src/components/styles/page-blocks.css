@@ -18,7 +18,20 @@
 }
 
 .login-link.active, .signup-link.active, .home-link.active{
-    display: none;
+    /* display: none; */
+    font-weight: bolder;
+    background-color: rgb(247, 211, 247);
+    padding: 17px; 
+    
+}
+
+.reset.active{
+    /* line-height: 100%; */
+    border-radius: 0;
+    font-weight: bolder;
+    background-color: rgb(247, 211, 247);
+    padding: 19px; 
+
 }
 
 
@@ -29,8 +42,9 @@
 
 .reset{
     border: none;
-    background-color: rgb(167, 166, 167);
-    color: rgb(165, 24, 48);
+    background-color: rgb(200, 200, 200);
+    /* color: rgb(165, 24, 48); */
+    color: indigo;
     border-radius: 5px;
     padding: 5px;
     font-size: 0.8em; 
@@ -38,8 +52,8 @@
 }
 
 .reset:hover{
-    background-color: rgb(93, 93, 93);
-    color: rgb(237, 138, 155);
+    background-color: rgb(216, 216, 216);
+    color: rgb(247, 67, 232);
 }
 
 .mod-cont{
@@ -92,11 +106,19 @@
 
 .email-form{
     display: flex;
-    gap: 0.5em
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 3%;
+    align-items: center;
 }
 
 .e-form-title{
     color: white;
+}
+
+.e-form{
+    display: flex;
+    gap: 0.5em
 }
 
 .success-msg{
@@ -119,6 +141,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1.5em;
 }
 
 .preset-form{
@@ -140,4 +163,26 @@
     border: none;
     width: 250px;
     padding-left: 5px;
+}
+
+.preset-submit{
+    height: 2em;
+    margin-top: 0.8em;
+    width: 257px;
+    background-color: rgb(100, 199, 194);
+    color: rgb(17, 32, 32);
+    border: none;
+    border-radius: 4px;
+}
+
+.preset-submit:hover{
+    background-color: rgb(40, 66, 66);
+    color:  lightseagreen;
+}
+
+.preset-done{
+background-color: rgba(183, 3, 120, 0.3);
+padding: 5px;
+border-radius: 5px;
+color: black;
 }
