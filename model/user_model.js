@@ -21,7 +21,8 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Todo'
         }
-    ]
+    ],
+    resetToken: String
 })
 
 userSchema.pre('save', async function(next){
