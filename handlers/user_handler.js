@@ -6,11 +6,10 @@ module.exports.generateToken = (id) => {
     });
 };
 
-// module.exports.generateToken = () => {
-//     return jwt.sign(process.env.JWT_SECRET,{
-//         expiresIn: 3 * 24 * 60 * 60 * 1000
-//     });
-// };
+//generating the verification token
+module.exports.verificationToken = (email) => {
+    return jwt.sign({ email }, process.env.VERIFY_SECRET)
+};
 
 //with id
 module.exports.deleteToken = (id) => {

@@ -2,13 +2,16 @@ const express = require('express');
 const { authUser } = require('../authentication/auth');
 const { 
     signUp, 
+    activateAccount,
     logIn, 
     logOut, 
     userTodos,  
     resetPassword, 
     forgotPasswordLink, 
-    resetForgottenPassword 
+    resetForgottenPassword
 } = require('../controller/user_controller');
+
+
 
 
 router = express.Router()
@@ -24,6 +27,8 @@ router.post('/reset-mailer', forgotPasswordLink )
 router.get('/logout/:id', logOut)
 
 router.get('/todos/:id', userTodos)
+
+router.get('/account-activation/:verificationCode', activateAccount);
 
 router.put('/reset-password/:resetToken', resetForgottenPassword)
 
