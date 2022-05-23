@@ -39,6 +39,8 @@ ReactDOM.render(
             :
             <Route path='/reset-password/:resetToken' element={<PassResetForm/>} />
           }
+
+          <Route path='/account-activation/:verificationCode' element={<Login/>} />
           
 
         </Route>

@@ -159,16 +159,15 @@
 
 .preset-input{
     height: 2em;
-    border-radius: 4px;
     border: none;
-    width: 250px;
+    width: 220px;
     padding-left: 5px;
 }
 
 .preset-submit{
     height: 2em;
     margin-top: 0.8em;
-    width: 257px;
+    width: 280px;
     background-color: rgb(100, 199, 194);
     color: rgb(17, 32, 32);
     border: none;

@@ -2,6 +2,8 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import './styles/page-blocks.css';
+import './styles/password-reset.css';
 
 export default function PassResetForm() {
 
@@ -9,11 +11,24 @@ export default function PassResetForm() {
     const [newPassword, setNewPassword] = useState('')
     const [confirmNewP, setConfirmNewP] = useState('')
     const [done, setDone] = useState('')
+    const [resetErr, setResetErr] = useState('')
+    const [passwordType, setPasswordType] = useState('password')
+
+
     const user = JSON.parse(window.localStorage.getItem('logged'))
     // const thisEmail = JSON.parse(window.localStorage.getItem('theEmail'))
     const redirect = useNavigate();
 
     const { resetToken } = useParams()
+
+    const togglePassword = () => {
+        if(passwordType === 'password'){
+          setPasswordType('text')
+          return;
+        }
+       setPasswordType('password')
+      }
+
 
 
     const resetPassword = async (e) => {
@@ -78,7 +93,8 @@ export default function PassResetForm() {
 
 
         } catch (error) {
-            console.log(error)
+            console.log('the reset error', error.response.data.message)
+            setResetErr(error.response.data.message)
         }
     }
 
@@ -87,13 +103,41 @@ export default function PassResetForm() {
         <div className='preset-form-cont'>
 
             {done ? <span className='preset-done'>{done}</span> : null}
+            {resetErr ? <span className='preset-done'>{resetErr}</span> : null}
 
             <form className='preset-form'>
                 <h1>Reset Password</h1>
-                {user ? <input className='preset-input' type='password' placeholder='Old Password' onChange={(e) => setOldPassword(e.target.value)} /> : null}
 
-                <input className='preset-input' type='password' placeholder='New Password' onChange={(e) => setNewPassword(e.target.value)} />
+               
+                {user ? 
+                <div className='oldpass'>
+               <input className='preset-input' type={passwordType} placeholder='Old Password' onChange={(e) => setOldPassword(e.target.value)} /> 
+                {passwordType === 'password' ?
+                    <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye-slash"></i></div>
+                    :
+                    <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye"></i></div>
+                }
+                </div> 
+                : null}
+
+                <div className='newpass'>
+                <input className='preset-input' type={passwordType} placeholder='New Password' onChange={(e) => setNewPassword(e.target.value)} />
+                {passwordType === 'password' ?
+                    <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye-slash"></i></div>
+                    :
+                    <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye"></i></div>
+                }
+                </div>
+
+                <div className='confnewpass'>
                 <input className='preset-input' type='password' placeholder='Confirm New Password' onChange={(e) => setConfirmNewP(e.target.value)} />
+                {passwordType === 'password' ?
+                    <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye-slash"></i></div>
+                    :
+                    <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye"></i></div>
+                }
+                </div>
+                
 
                 <button action='submit' className='preset-submit' onClick={resetPassword}>Submit</button>
             </form>

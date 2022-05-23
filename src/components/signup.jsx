@@ -10,7 +10,17 @@ export default function Signup() {
   const [password, setPassword] = useState('')
   const [emailErr, setEmailErr] = useState('')
   const [pswdErr, setPswdErr] = useState('')
-  const navigate = useNavigate()
+  const [successMsg, setSuccessMsg] = useState('')
+  const [passwordType, setPasswordType] = useState('password')
+  //const navigate = useNavigate()
+
+  const togglePassword = () => {
+    if(passwordType === 'password'){
+      setPasswordType('text')
+      return;
+    }
+   setPasswordType('password')
+  }
 
   const signup = async (e) => {
     try{
@@ -28,7 +38,11 @@ export default function Signup() {
       const { data } = success;
 
       if(data){
-        navigate('/', {replace: true})
+        console.log('the success message---', data)
+        setSuccessMsg(data)
+        setEmail('')
+        setPassword('')
+        //navigate('/', {replace: true})
       }
     } catch(error){
       let theError = error.response.data
@@ -48,6 +62,8 @@ export default function Signup() {
   return (
     <div className='signup-page'>
 
+     { successMsg ? <p className='signup-success'>{successMsg}</p> : null } 
+
       <form className='signup-form'>
       <div className='user-logo'>
       <i class="fa-solid fa-circle-user"></i>
@@ -56,6 +72,7 @@ export default function Signup() {
         <div className="form-item">
           <div className='sign-icon-hold'><i class="fa-solid fa-user"></i></div>
           <input type="text" placeholder='Email' className='sign-email' onChange={(e) => setEmail(e.target.value)} />
+          
         </div>
 
         { 
@@ -66,8 +83,13 @@ export default function Signup() {
 
         <div className="form-item">
           <div className='sign-icon-hold'><i class="fa-solid fa-lock"></i></div>
-          <input type='password' className="sign-pswd" placeholder='Password' minlength='5' onChange={(e) => setPassword(e.target.value)} />
-        </div>
+          <input type={passwordType} className="sign-pswd" placeholder='Password' minlength='5' onChange={(e) => setPassword(e.target.value)} />
+         { passwordType === 'password' ?  
+          <div className='showpass' onClick={togglePassword}><i class="fa-solid fa-eye-slash"></i></div> 
+          : 
+         <div className='showpass' onClick={togglePassword}><i class="fa-solid fa-eye"></i></div>
+         } 
+       </div>
 
         { 
           pswdErr ? <span className='pswd-error'>{pswdErr}</span> : null

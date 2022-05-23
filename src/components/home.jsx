@@ -18,7 +18,7 @@ function Home() {
   const addTodo = async () => {
     try {
       setLoading(true)
-      
+
 
       const add = await axios.post(`/todos/add-todo/${theUser.userId}`, {
         todo: input
@@ -67,7 +67,7 @@ function Home() {
       console.log('todo json response from api', todo);
       console.log('data', data);
 
-      
+
       if (data.status === "Pending") {
         await axios.put(`/todos/update/${data._id}`, {
           status: "Done",
@@ -130,11 +130,11 @@ function Home() {
 
   return (
     <div className='page'>
-   
-     
+
+
 
       <div className='list'>
-        <h4>My To-Do List</h4>
+        {/* <h4>My To-Do List</h4> */}
         <div className='add-item'>
           <input className='new' type="text" placeholder='Add a to-do item'
             value={input}
