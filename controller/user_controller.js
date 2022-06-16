@@ -2,20 +2,13 @@ const Users = require('../model/user_model');
 const bcrypt = require('bcrypt')
 const cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
-const {
-    v4: uuidv4
-} = require('uuid');
-const {
-    generateToken,
-    verificationToken,
-    deleteToken
-} = require('../handlers/user_handler');
-const {
-    cookie
-} = require('express/lib/response');
+const {v4: uuidv4} = require('uuid');
+const { generateToken, verificationToken, deleteToken} = require('../handlers/user_handler');
+const { cookie } = require('express/lib/response');
+const { handleError } = require('../handlers/errorHandler')
 
 
-//signup controller
+//signup controller with imported error handling
 const signUp = async (req, res) => {
 
     const {
@@ -58,10 +51,8 @@ const signUp = async (req, res) => {
 
         const user = await newUser.save((error) => {
                 if (error) {
-                    console.log('the error', error.errors.email.message)
-                    res.status(500).json(
-                        error.errors.email.message
-                    )
+                   handleError(error, res)
+
                 } else {
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
@@ -71,33 +62,21 @@ const signUp = async (req, res) => {
                             res.status(200).json('We have sent an account activation link to your email. Kindly check and respond to complete your registration.');
                         }
                     });
-                   
+
                 }
 
-           
+
 
             }
 
 
         );
 
-      
+
 
     } catch (error) {
-        console.log(error.message);
-        if (error.message.includes('duplicate')) {
-            res.status(409).json('Email already exists');
+        console.log(error);
 
-        }
-        if (error.message.includes('validation failed: email')) {
-            console.log('the email error---', error.errors.email.message)
-            res.status(401).json(error.errors.email.message);
-
-        }
-        if (error.message.includes('Password length')) {
-            console.log('the password error---', error.errors.password.message)
-            res.status(401).json(error.errors.password.message);
-        }
 
 
     }
@@ -105,19 +84,111 @@ const signUp = async (req, res) => {
 
 }
 
+
+//signup controller with normal error handling
+// const signUp = async (req, res) => {
+
+//     const {
+//         email,
+//         password
+//     } = req.body;
+
+//     //generating the verification code using jwt handler verificationToken
+//     //const code = verificationToken(email);
+//     const code = uuidv4();
+//     console.log('verification code ---', code);
+
+//     try {
+//         const newUser = new Users({
+//             ...req.body,
+//             verificationCode: code
+//         });
+
+//         const transporter = nodemailer.createTransport({
+//             service: 'gmail',
+//             auth: {
+//                 user: 'kristilaing@gmail.com',
+//                 // pass: 'rkirbehsbslfqsis'
+//                 pass: 'krmrofkpkmtwehxf'
+//             }
+//         });
+
+//         const mailOptions = {
+
+//             to: `${email}`,
+//             subject: 'ToDo-App: Account Activation',
+//             // text: 'Testing nodemailer!',
+//             html: `<div>
+//             <p>Follow link below to activate your account</p>
+//             <p>http://localhost:3000/account-activation/${code}</p>
+//             </div>`,
+//             replyTo: 'dummy@gmail.com'
+//         };
+
+
+//         const user = await newUser.save((error) => {
+//                 if (error) {
+//                     console.log('the error----', error.errors)
+//                     if (error.code === 11000) {
+//                         res.status(409).json('Email already exists');
+
+//                     } else if (error.errors.email) {
+//                         // console.log('the email error---', error.errors.email.message)
+//                         res.status(401).json(error.errors.email.message);
+
+//                     } else if (error.errors.password) {
+//                         // console.log('the password error---', error.errors.password.message)
+//                         res.status(401).json(error.errors.password.message);
+//                     }
+
+//                 } else {
+//                     transporter.sendMail(mailOptions, function (error, info) {
+//                         if (error) {
+//                             console.log(error);
+//                         } else {
+//                             console.log('Email sent: ' + info.response);
+//                             res.status(200).json('We have sent an account activation link to your email. Kindly check and respond to complete your registration.');
+//                         }
+//                     });
+
+//                 }
+
+
+
+//             }
+
+
+//         );
+
+
+
+//     } catch (error) {
+//         console.log(error);
+
+
+
+//     }
+
+
+// }
+
 const activateAccount = async (req, res) => {
 
-    try{
+    try {
 
-        const user = await Users.findOne({verificationCode: req.params.verificationCode})
+        const user = await Users.findOne({
+            verificationCode: req.params.verificationCode
+        })
 
-        if(user){
+        if (user) {
             user.status = 'Active';
-     
-            user.save( err => {
-                if(err){
-                    res.status(500).json({message: err})
-                } else{
+
+            user.save(err => {
+                if (err) {
+                    res.status(500).json({
+                        message: err
+                    })
+                } else {
 
                     const token = generateToken(user._id);
                     res.cookie('jwt', token, {
@@ -130,14 +201,16 @@ const activateAccount = async (req, res) => {
                     console.log(`Successfully signed up ${user.email}`);
                 }
             })
-     
-        } else{
+
+        } else {
             res.status(404).json('Account not found.')
         }
-     
-       
-    } catch(err){
-        res.status(401).json({message: err})
+
+
+    } catch (err) {
+        res.status(401).json({
+            message: err
+        })
         console.log(err)
     }
 
@@ -254,7 +327,7 @@ const forgotPasswordLink = async (req, res) => {
             }
         });
 
-        res.send('We have sent an emial to your mail. Kindly check and respond.');
+        res.send('We have sent you an email to reset your password. Kindly check and respond.');
 
 
 
@@ -290,16 +363,26 @@ const resetPassword = async (req, res) => {
 
 
             if (isSame) {
-                const salt = await bcrypt.genSalt();
-                updating.password = await bcrypt.hash(updating.password, salt);
-                const newpass = await Users.updateOne({
-                    email: found
-                }, updating);
 
-                res.status(200).json({
-                    message: 'User password successfully changed',
-                    newpass
-                })
+                if (newPassword.length < 5) {
+                    res.status(409).json({
+                        message: 'Password length should exceed 4 characters'
+                    })
+
+                } else {
+
+                    const salt = await bcrypt.genSalt();
+                    updating.password = await bcrypt.hash(updating.password, salt);
+                    const newpass = await Users.updateOne({
+                        email: found
+                    }, updating);
+
+                    res.status(200).json({
+                        message: 'User password successfully changed',
+                        newpass
+                    })
+
+                }
 
 
             } else {
@@ -374,17 +457,6 @@ const logOut = async (req, res) => {
     }
 }
 
-
-// const logOut = async (req, res) => {
-//     try{
-//         res.cookie('jwt', deleteToken, {maxAge: -1, httpOnly: true})
-//         res.status(201).json()
-//         console.log('User successfully logged out')
-
-//     } catch(error){
-//         console.log(error.message)
-//     }
-// }
 
 
 const userTodos = async (req, res) => {

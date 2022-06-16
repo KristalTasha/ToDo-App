@@ -18,7 +18,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: [true, "Kindly enter in your password"],
-        minlength: [5, 'Password length should exceed 5 characters']
+        minlength: [5, 'Password length should exceed 4 characters']
     },
     todos: [{
         type: Schema.Types.ObjectId,
