@@ -91,13 +91,16 @@
 }
 
 .signup-success{
-    background-color: rgba(228, 174, 245, 0.317);
+    /* background-color: rgba(228, 174, 245, 0.317); */
     /* background-color: rgba(255, 228, 196, 0.253); */
     padding: 5px;
     border-radius: 4px;
     color: rgb(39, 0, 39);
     /* color: white; */
     font-weight: bold;
+    width: 50%;
+    text-align: center;
+    font-size: 1.5em;
 }
 
 .showpass{

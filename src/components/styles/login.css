@@ -163,7 +163,7 @@ color: white;
 }
 
 .activated{
-    background-color: rgba(174, 207, 245, 0.317);
+    /* background-color: rgba(174, 207, 245, 0.317); */
     padding: 5px;
     border-radius: 4px;
     color: rgb(19, 3, 100);

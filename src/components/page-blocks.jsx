@@ -81,7 +81,9 @@ function SendEmailForm() {
 
   return (
     <div className='mod-cont'>
-      {successMsg ? <p className='success-msg'>{successMsg}</p> : null}
+      { 
+      successMsg ? <p className='success-msg'>{successMsg}</p> 
+      : 
       <div className='mod-box'>
         <h1 className='e-form-title'>Reset Password</h1>
         <p>A link to reset your password will be sent to you email address.</p>
@@ -95,6 +97,8 @@ function SendEmailForm() {
         </form>
 
       </div>
+
+    }
     </div>
   )
 }

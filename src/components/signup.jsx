@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './styles/login.css'
 import './styles/signup.css'
 
@@ -62,7 +62,11 @@ export default function Signup() {
   return (
     <div className='signup-page'>
 
-     { successMsg ? <p className='signup-success'>{successMsg}</p> : null } 
+     { successMsg ? 
+     
+     <p className='signup-success'>{successMsg}</p> 
+     
+     : 
 
       <form className='signup-form'>
       <div className='user-logo'>
@@ -103,6 +107,9 @@ export default function Signup() {
         
         <button action="submit" className="sign-submit" onClick={signup}>Sign Up</button>
       </form>
+
+        }
+
     </div>
   )
 }

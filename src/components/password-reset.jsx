@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 import { useState } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './styles/page-blocks.css';
 import './styles/password-reset.css';
 
@@ -51,6 +51,7 @@ export default function PassResetForm() {
                         setDone(feedback)
                         console.log('done--', done)
 
+                        setResetErr('')
                         setNewPassword('')
                         setConfirmNewP('')
 
@@ -71,6 +72,7 @@ export default function PassResetForm() {
                     if (resetDone) {
                         let feedback = resetDone.data.message
                         setDone(feedback)
+                        setResetErr('')
                         setNewPassword('')
                         setConfirmNewP('')
                         const exit = await axios.get(`/user/logout/${user.userId}`)
@@ -102,8 +104,11 @@ export default function PassResetForm() {
 
         <div className='preset-form-cont'>
 
-            {done ? <span className='preset-done'>{done}</span> : null}
-            {resetErr ? <span className='preset-done'>{resetErr}</span> : null}
+        {resetErr ? <span className='preset-done'>{resetErr}</span> : null}
+
+            { done ? <span className='preset-done'>{done}</span> 
+           
+             : 
 
             <form className='preset-form'>
                 <h1>Reset Password</h1>
@@ -111,7 +116,7 @@ export default function PassResetForm() {
                
                 {user ? 
                 <div className='oldpass'>
-               <input className='preset-input' type={passwordType} placeholder='Old Password' onChange={(e) => setOldPassword(e.target.value)} /> 
+               <input className='preset-input' type={passwordType} placeholder='Old Password' value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} /> 
                 {passwordType === 'password' ?
                     <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye-slash"></i></div>
                     :
@@ -121,7 +126,7 @@ export default function PassResetForm() {
                 : null}
 
                 <div className='newpass'>
-                <input className='preset-input' type={passwordType} placeholder='New Password' onChange={(e) => setNewPassword(e.target.value)} />
+                <input className='preset-input' type={passwordType} placeholder='New Password' value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                 {passwordType === 'password' ?
                     <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye-slash"></i></div>
                     :
@@ -130,7 +135,7 @@ export default function PassResetForm() {
                 </div>
 
                 <div className='confnewpass'>
-                <input className='preset-input' type='password' placeholder='Confirm New Password' onChange={(e) => setConfirmNewP(e.target.value)} />
+                <input className='preset-input' type={passwordType} placeholder='Confirm New Password' value={confirmNewP} onChange={(e) => setConfirmNewP(e.target.value)} />
                 {passwordType === 'password' ?
                     <div className='hideshowpass' onClick={togglePassword}><i class="fa-solid fa-eye-slash"></i></div>
                     :
@@ -142,6 +147,7 @@ export default function PassResetForm() {
                 <button action='submit' className='preset-submit' onClick={resetPassword}>Submit</button>
             </form>
 
+    }
         </div>
     )
 
