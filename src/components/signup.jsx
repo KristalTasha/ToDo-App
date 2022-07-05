@@ -26,14 +26,15 @@ export default function Signup() {
     try{
       e.preventDefault();
 
-      const success = await axios.post(
-        'http://localhost:8000/api/user/signup',
+      const success = await axios.post('/user/signup',
         {
           email,
           password
-        },
-        { withCredentials: true }
-        );
+        });
+
+
+      
+      console.log('pending signup response', success)
 
       const { data } = success;
 
@@ -75,7 +76,7 @@ export default function Signup() {
 
         <div className="form-item">
           <div className='sign-icon-hold'><i class="fa-solid fa-user"></i></div>
-          <input type="text" placeholder='Email' className='sign-email' onChange={(e) => setEmail(e.target.value)} />
+          <input type="text" placeholder='Email' className='sign-email' onChange={(e) => setEmail(e.target.value)}  value={email} />
           
         </div>
 
@@ -87,7 +88,7 @@ export default function Signup() {
 
         <div className="form-item">
           <div className='sign-icon-hold'><i class="fa-solid fa-lock"></i></div>
-          <input type={passwordType} className="sign-pswd" placeholder='Password' minlength='5' onChange={(e) => setPassword(e.target.value)} />
+          <input type={passwordType} className="sign-pswd" placeholder='Password' minLength='6' onChange={(e) => setPassword(e.target.value)} value={password} />
          { passwordType === 'password' ?  
           <div className='showpass' onClick={togglePassword}><i class="fa-solid fa-eye-slash"></i></div> 
           : 

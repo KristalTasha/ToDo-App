@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import './styles/page-blocks.css';
 
-function Header({ person }) {
+function Header() {
   const redirect = useNavigate();
   const user = JSON.parse(window.localStorage.getItem('logged'))
 
@@ -23,9 +23,7 @@ function Header({ person }) {
   }
 
   return (
-    <nav className='login-nav'>
-
-      
+    <header className='login-nav'>
 
       {!user ?
         <>
@@ -43,7 +41,7 @@ function Header({ person }) {
         </>
       }
 
-    </nav>
+    </header>
   )
 }
 
@@ -57,7 +55,7 @@ function SendEmailForm() {
     try {
       e.preventDefault();
 
-      // console.log('the email---', email)
+    
 
       const sent = await axios.post('/user/reset-mailer',
         {
@@ -86,7 +84,7 @@ function SendEmailForm() {
       : 
       <div className='mod-box'>
         <h1 className='e-form-title'>Reset Password</h1>
-        <p>A link to reset your password will be sent to you email address.</p>
+        <p>A link to reset your password will be sent to your email address.</p>
         <p>Kindly confirm your email address</p>
         <form className='email-form'>
           <div className='e-form'>

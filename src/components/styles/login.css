@@ -129,6 +129,11 @@
     text-decoration: none;
 }
 
+.forgot-text:hover{
+    color:  rgb(33, 133, 183);  
+    /* font-weight: bolder; */
+}
+
 .forgot{
     margin-top: 0.5em;
 }

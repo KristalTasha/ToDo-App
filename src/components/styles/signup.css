@@ -1,8 +1,8 @@
-.signup-page{
+.signup-page {
     display: flex;
     /* background-color:  rgba(33,40,112,0.5779353977919293); */
-    background: rgb(23,162,234);
-    background: linear-gradient(95deg, rgba(23,162,234,0.46589057986475846) 8%, rgba(213,23,234,0.46589057986475846) 28%, rgba(219,230,28,0.15216508966867992) 65%, rgba(149,32,227,0.7572071064754027) 100%);
+    background: rgb(23, 162, 234);
+    background: linear-gradient(95deg, rgba(23, 162, 234, 0.46589057986475846) 8%, rgba(213, 23, 234, 0.46589057986475846) 28%, rgba(219, 230, 28, 0.15216508966867992) 65%, rgba(149, 32, 227, 0.7572071064754027) 100%);
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -13,7 +13,7 @@
 
 }
 
-.signup-form{
+.signup-form {
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -24,12 +24,12 @@
     /* height: 18em; */
     padding-left: 3%;
     padding-right: 3%;
-  
+
     align-items: center;
     z-index: 1;
 }
 
-.sign-icon-hold{
+.sign-icon-hold {
     display: flex;
     background-color: rgb(25, 1, 31);
     padding: 10px;
@@ -37,12 +37,13 @@
     width: 20px;
 }
 
-.sign-icon-hold i{
+.sign-icon-hold i {
     color: white;
     text-align: center;
 }
 
-.sign-pswd, .sign-email{
+.sign-pswd,
+.sign-email {
     background-color: rgb(92, 56, 94);
     border: none;
     padding: 2px;
@@ -51,7 +52,7 @@
     color: white;
 }
 
-.sign-submit{
+.sign-submit {
     border: none;
     background-color: rgb(25, 1, 31);
     width: 8em;
@@ -60,37 +61,39 @@
     border-top-right-radius: 10px;
     color: white;
     /* margin-top: 4em; */
-    }
+}
 
-.sign-submit:hover{
-    background-color: rgb(156, 113, 165); 
+.sign-submit:hover {
+    background-color: rgb(156, 113, 165);
     color: rgb(25, 1, 31);
 }
 
-    .form-tip{
-        display: flex;
-        width: 100%;
-        align-items:center;
-        gap: 0.5em;
-        line-height: 0.6em;
-        justify-content: center;
-    }
+.form-tip {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.5em;
+    line-height: 0.6em;
+    justify-content: center;
+}
 
-    .log-link{
+.log-link {
+    color: rgb(4, 59, 87);
     font-size: 0.8em;
     text-decoration: none;
-    }
-    
-    .log-link:hover{
-        color: orchid;
-    }
+}
 
-.email-error, .pswd-error{
+.log-link:hover {
+    color: orchid;
+}
+
+.email-error,
+.pswd-error {
     font-size: 0.6em;
     color: brown;
 }
 
-.signup-success{
+.signup-success {
     /* background-color: rgba(228, 174, 245, 0.317); */
     /* background-color: rgba(255, 228, 196, 0.253); */
     padding: 5px;
@@ -103,7 +106,7 @@
     font-size: 1.5em;
 }
 
-.showpass{
+.showpass {
     background-color: rgb(92, 56, 94);
     color: white;
     display: flex;

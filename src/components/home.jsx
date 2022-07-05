@@ -15,8 +15,10 @@ function Home() {
   const [error, setError] = useState(false);
   const theUser = JSON.parse(window.localStorage.getItem('logged'))
 
-  const addTodo = async () => {
+  const addTodo = async (e) => {
     try {
+      e.preventDefault()
+      
       setLoading(true)
 
 
@@ -135,16 +137,18 @@ function Home() {
 
       <div className='list'>
         {/* <h4>My To-Do List</h4> */}
-        <div className='add-item'>
+        <form className='add-item'>
           <input className='new' type="text" placeholder='Add a to-do item'
             value={input}
             onChange={(e) => setInput(e.target.value)} />
-          <button className='add' onClick={addTodo} disabled={!input}>Add a to-do item</button>
-        </div>
+          <button className='add' onClick={addTodo} disabled={!input}> + </button>
+        </form>
         <Tracker />
+
         {loading &&
           <p>Refreshing... {loading}</p>}
         {error && <p>{errorMsg}</p>}
+
         <Todos todos={todos} deleteTodos={deleteTodos} update={update} />
       </div>
       <div className='space'>

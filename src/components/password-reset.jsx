@@ -36,7 +36,8 @@ export default function PassResetForm() {
             e.preventDefault();
 
             if (confirmNewP !== newPassword) {
-                alert('Passwords do not match');
+                // alert('Passwords do not match');
+                setResetErr('Passwords do not match')
             } else {
 
                 if (!user) {
@@ -104,7 +105,7 @@ export default function PassResetForm() {
 
         <div className='preset-form-cont'>
 
-        {resetErr ? <span className='preset-done'>{resetErr}</span> : null}
+        {resetErr ? <span className='preset-err'>{resetErr}</span> : null}
 
             { done ? <span className='preset-done'>{done}</span> 
            

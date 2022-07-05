@@ -20,7 +20,7 @@ export default function Login() {
   const UserVerified = async () => {
 
     try {
-      const verified = await axios.get(`user/account-activation/${verificationCode}`)
+      const verified = await axios.get(`/user/account-activation/${verificationCode}`)
       const { data } = verified;
       console.log('verified msg---', data.message)
       setActivateSuccess(data.message)

@@ -4,11 +4,11 @@ import Blocks from './components/page-blocks'
 import Footer from './components/footer';
 
 
-function App({person}) {
+function App() {
   
   return (
-    <div className='home-page'>
-     <div><Blocks.Header person={person}/></div>
+    <div className='app-page'>
+     <div className='page-header'><Blocks.Header/></div>
       <div><Outlet/></div>
       <div><Footer/></div>
    
