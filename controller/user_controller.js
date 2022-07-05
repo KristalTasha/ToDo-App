@@ -6,9 +6,10 @@ const {v4: uuidv4} = require('uuid');
 const { generateToken, verificationToken, deleteToken} = require('../handlers/user_handler');
 const { cookie } = require('express/lib/response');
 const { handleError } = require('../handlers/errorHandler')
+const { configureMail } = require('../handlers/sendMail.config')
 
 
-//signup controller with imported error handling
+//signup controller with imported error handling and mail config
 const signUp = async (req, res) => {
 
     const {
@@ -27,26 +28,6 @@ const signUp = async (req, res) => {
             verificationCode: code
         });
 
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'kristilaing@gmail.com',
-                // pass: 'rkirbehsbslfqsis'
-                pass: 'krmrofkpkmtwehxf'
-            }
-        });
-
-        const mailOptions = {
-
-            to: `${email}`,
-            subject: 'ToDo-App: Account Activation',
-            // text: 'Testing nodemailer!',
-            html: `<div>
-            <p>Follow link below to activate your account</p>
-            <p>http://localhost:3000/account-activation/${code}</p>
-            </div>`,
-            replyTo: 'dummy@gmail.com'
-        };
 
 
         const user = await newUser.save((error) => {
@@ -54,123 +35,29 @@ const signUp = async (req, res) => {
                    handleError(error, res)
 
                 } else {
-                    transporter.sendMail(mailOptions, function (error, info) {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log('Email sent: ' + info.response);
-                            res.status(200).json('We have sent an account activation link to your email. Kindly check and respond to complete your registration.');
-                        }
-                    });
+                 configureMail(email,
+                     'ToDo-App: Account Activation', 
+                     `<div>
+                     <p>Kindly follow the link below to activate your account</p>
+                     <p>http://localhost:3000/account-activation/${code}</p>
+                     </div>`,
+                     'dummy@gmail.com', 
+                     res)
 
                 }
 
-
-
             }
-
 
         );
 
-
-
     } catch (error) {
         console.log(error);
-
-
 
     }
 
 
 }
 
-
-//signup controller with normal error handling
-// const signUp = async (req, res) => {
-
-//     const {
-//         email,
-//         password
-//     } = req.body;
-
-//     //generating the verification code using jwt handler verificationToken
-//     //const code = verificationToken(email);
-//     const code = uuidv4();
-//     console.log('verification code ---', code);
-
-//     try {
-//         const newUser = new Users({
-//             ...req.body,
-//             verificationCode: code
-//         });
-
-//         const transporter = nodemailer.createTransport({
-//             service: 'gmail',
-//             auth: {
-//                 user: 'kristilaing@gmail.com',
-//                 // pass: 'rkirbehsbslfqsis'
-//                 pass: 'krmrofkpkmtwehxf'
-//             }
-//         });
-
-//         const mailOptions = {
-
-//             to: `${email}`,
-//             subject: 'ToDo-App: Account Activation',
-//             // text: 'Testing nodemailer!',
-//             html: `<div>
-//             <p>Follow link below to activate your account</p>
-//             <p>http://localhost:3000/account-activation/${code}</p>
-//             </div>`,
-//             replyTo: 'dummy@gmail.com'
-//         };
-
-
-//         const user = await newUser.save((error) => {
-//                 if (error) {
-//                     console.log('the error----', error.errors)
-//                     if (error.code === 11000) {
-//                         res.status(409).json('Email already exists');
-
-//                     } else if (error.errors.email) {
-//                         // console.log('the email error---', error.errors.email.message)
-//                         res.status(401).json(error.errors.email.message);
-
-//                     } else if (error.errors.password) {
-//                         // console.log('the password error---', error.errors.password.message)
-//                         res.status(401).json(error.errors.password.message);
-//                     }
-
-//                 } else {
-//                     transporter.sendMail(mailOptions, function (error, info) {
-//                         if (error) {
-//                             console.log(error);
-//                         } else {
-//                             console.log('Email sent: ' + info.response);
-//                             res.status(200).json('We have sent an account activation link to your email. Kindly check and respond to complete your registration.');
-//                         }
-//                     });
-
-//                 }
-
-
-
-//             }
-
-
-//         );
-
-
-
-//     } catch (error) {
-//         console.log(error);
-
-
-
-//     }
-
-
-// }
 
 const activateAccount = async (req, res) => {
 
@@ -280,11 +167,8 @@ const forgotPasswordLink = async (req, res) => {
             email
         } = req.body
 
-
-
         const resetToken = uuidv4();
 
-        // const user = await User.findOne({ email });
 
         const updateUserToken = await Users.findOneAndUpdate({
             email
@@ -298,36 +182,15 @@ const forgotPasswordLink = async (req, res) => {
             res.status(401).json('Email cannot be found')
         }
 
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'kristilaing@gmail.com',
-                // pass: 'rkirbehsbslfqsis'
-                pass: 'krmrofkpkmtwehxf'
-            }
-        });
 
-        const mailOptions = {
-
-            to: `${email}`,
-            subject: 'ToDo-App: Reset Your Password',
-            // text: 'Testing nodemailer!',
-            html: `<div>
-            <p>Follow link below to reset your password</p>
+        configureMail(email,
+            'ToDo-App: Reset Your Password', 
+            `<div>
+            <p>Kindly follow the link below to reset your password</p>
             <p>http://localhost:3000/reset-password/${resetToken}</p>
             </div>`,
-            replyTo: 'dummy@gmail.com'
-        };
-
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
-
-        res.send('We have sent you an email to reset your password. Kindly check and respond.');
+            'dummy@gmail.com', 
+            res)
 
 
 

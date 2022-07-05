@@ -1,9 +1,9 @@
 const nodemailer = require('nodemailer');
 
-module.exports.configureMail = async (from, to, subject, text, replyTo) => {
+module.exports.configureMail = async (to, subject, html, replyTo, res) => {
 
     const mailOptions = {
-        from, to, subject, text, replyTo
+        to, subject, html, replyTo
     }
 
     const transporter = nodemailer.createTransport({
@@ -14,6 +14,23 @@ module.exports.configureMail = async (from, to, subject, text, replyTo) => {
         }
     });
 
-    return await transporter.sendMail(mailOptions)
+    return await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+
+            if(subject.includes('Activation')){
+                res.status(200).json('We have sent an account activation link to your email. Kindly check and respond to complete your registration.');
+            } 
+
+            
+            if(subject.includes('Reset')){
+                res.status(200).json('We have sent you an email to reset your password. Kindly check and respond.');
+            } 
+           
+        }
+    });
+
 
 }
