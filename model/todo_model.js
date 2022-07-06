@@ -9,9 +9,6 @@ const TodoSchema = new Schema({
         type: String,
         default: "Pending"
     },
-    date: {
-        type: Date
-    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'

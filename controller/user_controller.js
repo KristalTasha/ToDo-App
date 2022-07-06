@@ -338,8 +338,6 @@ const userTodos = async (req, res) => {
     // })
     // console.log(todosByDate)
 
-  
-
 }
 
 module.exports = {
