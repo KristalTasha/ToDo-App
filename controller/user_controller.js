@@ -327,8 +327,18 @@ const userTodos = async (req, res) => {
         id
     } = req.params
     const user = await Users.findById(id).populate("todos")
-    // const userTodoList = user.populate("todos");
     res.send(user.todos)
+
+    // const todosByDate = user.todos.sort({createdAt: -1}, (err, docs) => {
+    //     if(err){
+    //         console.log('todosByDate error---', err)
+    //     } else{
+    //         console.log('todosByDate---', docs)
+    //     }
+    // })
+    // console.log(todosByDate)
+
+  
 
 }
 

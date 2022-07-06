@@ -6,7 +6,8 @@ const addTodo = async (req, res) => {
     const { todo } = req.body;
 
     const data = {
-        todo
+        todo,
+        date: new Date()
     }
 
     const fullData = { ...data, user: id }
@@ -15,8 +16,6 @@ const addTodo = async (req, res) => {
         const dataToStore = new Todo(fullData);
         const saveData = await dataToStore.save();
         const fetchUser = await User.findById(id);
-        // console.log(fetchUser)
-        // res.send(fetchUser)
     
         fetchUser.todos.push(saveData);
         await fetchUser.save()
@@ -30,19 +29,7 @@ const addTodo = async (req, res) => {
 
 }
 
-// const addTodo = async (req, res) => {
-//     const { todo } = req.body;
 
-//     const data = {
-//         todo
-//     };
-
-//     const dataToStore = new Todo(data);
-
-//     const saveData = await dataToStore.save();
-
-//     res.status(201).json(saveData);
-// };
 
 const fetchTodos = async (req, res) => {
     try {
@@ -111,8 +98,7 @@ const updateTodo = async (req, res) => {
         console.log('update object', update)
 
         res.status(200).json(todo);
-        // res.status(200).json(update);
-        // res.json(update);
+
 
     } catch (error) {
         res.status(500).json({err: error.message})
