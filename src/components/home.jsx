@@ -100,24 +100,25 @@ function Home() {
 
   }
 
+  const fetchTodos = async () => {
+     
+    const theTodos = await axios.get(`/user/todos/${theUser.userId}`);
+    console.log('the todos', theTodos)
+
+    const { data } = theTodos;
+
+    setTodos(data)
+   
+  }
+
 
 
   useEffect(() => {
+    fetchTodos()
     Counter('Done')
     console.log('the count', count)
 
-    const fetchTodos = async () => {
-     
-      const theTodos = await axios.get(`/user/todos/${theUser.userId}`);
-      console.log('the todos', theTodos)
-
-      const { data } = theTodos;
-
-      setTodos(data)
-     
-    }
-
-    fetchTodos()
+    
   }, [loading, count]);
 
 

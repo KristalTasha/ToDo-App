@@ -7,6 +7,13 @@ import './styles/page-blocks.css';
 function Header() {
   const redirect = useNavigate();
   const user = JSON.parse(window.localStorage.getItem('logged'))
+  let userN = user.userEmail.split('@')[0]
+  console.log('userName', userN)
+
+
+
+
+
 
   const logout = async (e) => {
     try {
@@ -25,20 +32,31 @@ function Header() {
   return (
     <header className='login-nav'>
 
+      <div className='logo-div'>
+      <i class="fa-solid fa-clipboard-check"></i>
+        <h4 className='logo'>CHECKED</h4>
+      </div>
+
       {!user ?
-        <>
+        <div className='landing-page-navs'>
           <NavLink to="/home" className="home-link">Home</NavLink>
           <NavLink to="/" className="login-link">Login</NavLink>
           <NavLink to="/signup" className="signup-link">Signup</NavLink>
-        </>
+        </div>
         :
-        <>
-          <NavLink to="/home" className="home-link">Home</NavLink>
-          <div>Welcome {user.userEmail}</div>
-          <NavLink to='/reset-password' className='reset'>Reset Password</NavLink>
-          <button className='logout' onClick={logout}>Logout</button>
+        <div className='home-navs'>
 
-        </>
+          <div className='user-details'>
+            <NavLink to="/home" className="home-link">Home</NavLink>
+            <div className='welcomee'>Welcome <span className='userName'>{userN}</span> !</div>
+          </div>
+
+          <div className='user-utils'>
+            <NavLink to='/reset-password' className='reset'>Reset Password</NavLink>
+            <button className='logout' onClick={logout}>Logout</button>
+          </div>
+
+        </div>
       }
 
     </header>
@@ -55,7 +73,7 @@ function SendEmailForm() {
     try {
       e.preventDefault();
 
-    
+
 
       const sent = await axios.post('/user/reset-mailer',
         {
@@ -79,24 +97,24 @@ function SendEmailForm() {
 
   return (
     <div className='mod-cont'>
-      { 
-      successMsg ? <p className='success-msg'>{successMsg}</p> 
-      : 
-      <div className='mod-box'>
-        <h1 className='e-form-title'>Reset Password</h1>
-        <p>A link to reset your password will be sent to your email address.</p>
-        <p>Kindly confirm your email address</p>
-        <form className='email-form'>
-          <div className='e-form'>
-            <input type='text' className='reset-email' placeholder='Email' onChange={(e) => setUserEmail(e.target.value)} />
-            <button action='submit' className='reset-submit' onClick={sendMail}>Submit</button>
+      {
+        successMsg ? <p className='success-msg'>{successMsg}</p>
+          :
+          <div className='mod-box'>
+            <h1 className='e-form-title'>Reset Password</h1>
+            <p>A link to reset your password will be sent to your email address.</p>
+            <p>Kindly confirm your email address</p>
+            <form className='email-form'>
+              <div className='e-form'>
+                <input type='text' className='reset-email' placeholder='Email' onChange={(e) => setUserEmail(e.target.value)} />
+                <button action='submit' className='reset-submit' onClick={sendMail}>Submit</button>
+              </div>
+              <span className='email-error'>{fpError}</span>
+            </form>
+
           </div>
-          <span className='email-error'>{fpError}</span>
-        </form>
 
-      </div>
-
-    }
+      }
     </div>
   )
 }

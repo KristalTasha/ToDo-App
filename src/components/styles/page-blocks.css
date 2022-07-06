@@ -1,15 +1,55 @@
+.login-nav{
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.323);
+    padding: 4px;
+    padding-left: 4%;
+    padding-right: 5%;
+    width: 100%;
+    height: 3em;
+    align-items: center;
+    justify-content: space-between;
+    /* margin-top: 5em; */
+}
+
+.landing-page-navs, .home-navs, .logo-div, .user-utils, .user-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-navs{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-utils{
+    margin-right: 10%;
+}
+
+.logo{
+    color: rgb(254, 254, 254);
+    /* margin-right: 20em; */
+    font-weight: bolder;
+    font-size: 1.4em;
+    text-shadow: 3px 3px 5px rgb(14, 1, 10);
+}
+
 .logout {
+
     border: none;
-    background-color: indigo;
-    color: white;
+    color: indigo;
     border-radius: 5px;
     padding: 5px;
     font-size: 0.8em;
+    text-decoration: none;
+    background-color: transparent;
+
 }
 
 .logout:hover {
-    background-color: rgb(185, 96, 248);
-    color: indigo;
+    background-color: rgba(216, 216, 216, 0.4);
+    color: rgb(247, 67, 232);
 
 }
 
@@ -30,7 +70,6 @@
 }
 
 .reset.active {
-    /* line-height: 100%; */
     border-radius: 0;
     font-weight: bolder;
     background-color: rgb(247, 211, 247);
@@ -46,7 +85,7 @@
 
 .reset {
     border: none;
-    background-color: rgb(200, 200, 200);
+    /* background-color: rgb(200, 200, 200); */
     /* color: rgb(165, 24, 48); */
     color: indigo;
     border-radius: 5px;
@@ -56,8 +95,19 @@
 }
 
 .reset:hover {
-    background-color: rgb(216, 216, 216);
+    background-color: rgba(216, 216, 216, 0.4);
     color: rgb(247, 67, 232);
+}
+
+.welcomee{
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.userName{
+    font-weight: bold;
+    color: rgb(41, 0, 70);
+   
 }
 
 .mod-cont {
