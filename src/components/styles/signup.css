@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 30em;
+    height: 35em;
     overflow-x: hidden;
     gap: 0.5em;
 
@@ -94,8 +94,6 @@
 }
 
 .signup-success {
-    /* background-color: rgba(228, 174, 245, 0.317); */
-    /* background-color: rgba(255, 228, 196, 0.253); */
     padding: 5px;
     border-radius: 4px;
     color: rgb(39, 0, 39);
@@ -113,4 +111,8 @@
     align-items: center;
     justify-content: center;
     width: 3em;
+}
+
+.please-wait{
+    margin-top: 2em;
 }

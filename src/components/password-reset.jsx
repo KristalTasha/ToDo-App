@@ -13,6 +13,7 @@ export default function PassResetForm() {
     const [done, setDone] = useState('')
     const [resetErr, setResetErr] = useState('')
     const [passwordType, setPasswordType] = useState('password')
+    const [loading, setLoading] = useState(false)
 
 
     const user = JSON.parse(window.localStorage.getItem('logged'))

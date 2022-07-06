@@ -17,6 +17,11 @@
     align-items: center;
 }
 
+.landing-page-navs{
+    margin-right: 48%;
+    gap: 1em;
+}
+
 .home-navs{
     width: 60%;
     display: flex;
@@ -25,6 +30,19 @@
 
 .user-utils{
     margin-right: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.logo-div{
+    display: flex;
+    gap: 0.3em;
+}
+
+.logo-div i{
+    font-size: 1.4em;
+    color: rgb(192, 59, 168);
+    text-shadow: 3px 3px 5px rgb(14, 1, 10);
 }
 
 .logo{
@@ -64,7 +82,8 @@
 .home-link.active {
     /* display: none; */
     font-weight: bolder;
-    background-color: rgb(247, 211, 247);
+    /* background-color: rgb(247, 211, 247); */
+    background-color: rgb(197 187 197 / 40%);
     padding: 17px;
 
 }

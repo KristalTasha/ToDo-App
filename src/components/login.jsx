@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { NavLink, Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import './styles/login.css'
 import './styles/signup.css'
 
@@ -134,10 +134,10 @@ export default function Login() {
         <div className='tips'>
 
           <div className="form-tips">
-            <div className='remember'>
+            {/* <div className='remember'>
               <input type="checkbox" className='checkbox' />
               <p className='rem-text'>Remember me</p>
-            </div>
+            </div> */}
             <div className='forgot'>
               {/* <p className='forgot-text'>Forgot password?</p> */}
               <Link to='/send-mail' className='forgot-text'>Forgot password?</Link>

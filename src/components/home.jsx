@@ -1,6 +1,5 @@
 import './styles/home.css';
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import Todos from './todos'
 
@@ -56,15 +55,6 @@ function Home() {
 
   }
 
-  function Counter(stat) {
-    let counting = todos.filter(done => {
-      return (done.status === stat)
-
-    })
-    setCount(counting.length)
-    console.log('counting length', counting.length)
-    console.log('done todos', counting)
-  }
 
   const update = async (id) => {
 
@@ -111,16 +101,16 @@ function Home() {
    
   }
 
+  
+  function Counter(stat) {
+    let counting = todos.filter(done => {
+      return (done.status === stat)
 
-
-  useEffect(() => {
-    fetchTodos()
-    Counter('Done')
-    console.log('the count', count)
-
-    
-  }, [loading, count]);
-
+    })
+    setCount(counting.length)
+    console.log('counting length', counting.length)
+    console.log('done todos', counting)
+  }
 
   function Tracker() {
     if (todos.length > 0) {
@@ -129,6 +119,19 @@ function Home() {
       return <p></p>
     }
   }
+
+
+  useEffect(() => {
+    fetchTodos()
+    Counter('Done')
+    Tracker()
+    console.log('the count', count)
+
+    
+  }, [loading, count]);
+
+
+  
 
 
 
@@ -147,7 +150,7 @@ function Home() {
             onChange={(e) => setInput(e.target.value)} />
           <button className='add' onClick={addTodo} disabled={!input}> + </button>
         </form>
-        <Tracker />
+        {/* <Tracker /> */}
 
         {loading &&
           <p>Refreshing... {loading}</p>}

@@ -21,7 +21,7 @@ export default function Todo({todo, deleteTodos, update}) {
   return (
     <div className='todo-item'>
       <div className='tobedone'>
-      {/* <input className='cbox ' type="checkbox" checked={true ? todo.status === 'Done' : todo.status === 'Pending'}></input> */}
+     
       <input className='cbox ' type="checkbox" onClick={() => toggleCheck(todo)} value={check} checked={true ? todo.status === 'Done' : todo.status === 'Pending'}></input>
       <p style={ todo.status === 'Done' ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{todo.todo}</p>
     </div>
@@ -30,12 +30,12 @@ export default function Todo({todo, deleteTodos, update}) {
 
       <button className='pending' onClick={() => update(todo._id)}
       style={ todo.status === 'Pending' ? { backgroundColor: 'sandybrown' } : {backgroundColor: 'rgb(0, 76, 0)'}}
-      >{todo.status}</button>
+      ><p>{todo.status}</p></button>
 
-      <button className='delete' onClick={() => deleteTodos(todo._id)}> x </button>
+      <button className='deleted' onClick={() => deleteTodos(todo._id)}>  <i class="fa-solid fa-trash-can"></i> </button>
+     
     </div>
     </div>
   )
 }
 
-// checked={true ? todo.status === 'Done' : todo.status === 'Pending'

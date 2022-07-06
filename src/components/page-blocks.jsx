@@ -1,24 +1,18 @@
 import axios from 'axios';
 import React from 'react'
 import { useState } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './styles/page-blocks.css';
 
 function Header() {
   const redirect = useNavigate();
   const user = JSON.parse(window.localStorage.getItem('logged'))
-  let userN = user.userEmail.split('@')[0]
-  console.log('userName', userN)
 
-
-
-
-
+  
 
   const logout = async (e) => {
     try {
       const exit = await axios.get(`/user/logout/${user.userId}`)
-      const { exited } = exit;
 
       if (exit) {
         window.localStorage.removeItem('logged');
@@ -39,7 +33,7 @@ function Header() {
 
       {!user ?
         <div className='landing-page-navs'>
-          <NavLink to="/home" className="home-link">Home</NavLink>
+          {/* <NavLink to="/home" className="home-link">Home</NavLink> */}
           <NavLink to="/" className="login-link">Login</NavLink>
           <NavLink to="/signup" className="signup-link">Signup</NavLink>
         </div>
@@ -48,7 +42,7 @@ function Header() {
 
           <div className='user-details'>
             <NavLink to="/home" className="home-link">Home</NavLink>
-            <div className='welcomee'>Welcome <span className='userName'>{userN}</span> !</div>
+            <div className='welcomee'>Welcome <span className='userName'>{user.userEmail.split('@')[0]}</span> !</div>
           </div>
 
           <div className='user-utils'>

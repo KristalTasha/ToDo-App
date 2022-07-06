@@ -12,6 +12,7 @@ export default function Signup() {
   const [pswdErr, setPswdErr] = useState('')
   const [successMsg, setSuccessMsg] = useState('')
   const [passwordType, setPasswordType] = useState('password')
+  const [loading, setLoading] = useState(false)
   //const navigate = useNavigate()
 
   const togglePassword = () => {
@@ -25,6 +26,8 @@ export default function Signup() {
   const signup = async (e) => {
     try{
       e.preventDefault();
+
+      setLoading(true)
 
       const success = await axios.post('/user/signup',
         {
@@ -43,18 +46,22 @@ export default function Signup() {
         setSuccessMsg(data)
         setEmail('')
         setPassword('')
+        setLoading(false)
         //navigate('/', {replace: true})
       }
     } catch(error){
+      setLoading(true)
       let theError = error.response.data
 
       if(theError.includes('Email') || theError.includes('email')){
         console.log('the error', error.response.data)
         setEmailErr(error.response.data)
+        setLoading(false)
 
       } else if (theError.includes('Password') || theError.includes('password')){
         console.log('the error', error.response.data)
         setPswdErr(error.response.data)
+        setLoading(false)
       }
      
     }
@@ -68,6 +75,11 @@ export default function Signup() {
      <p className='signup-success'>{successMsg}</p> 
      
      : 
+
+      <>
+      {loading ? <p className='please-wait'>Please wait...</p> : null }
+      
+      
 
       <form className='signup-form'>
       <div className='user-logo'>
@@ -108,6 +120,7 @@ export default function Signup() {
         
         <button action="submit" className="sign-submit" onClick={signup}>Sign Up</button>
       </form>
+      </>
 
         }
 
