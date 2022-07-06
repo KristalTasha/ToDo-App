@@ -18,7 +18,7 @@ function Home() {
   const addTodo = async (e) => {
     try {
       e.preventDefault()
-      
+
       setLoading(true)
 
 
@@ -54,9 +54,16 @@ function Home() {
       console.log(error);
     }
 
+  }
 
-    // const remnant = todos.filter(todo => todo.id !== id)
-    // setTodos([...remnant]);
+  function Counter(stat) {
+    let counting = todos.filter(done => {
+      return (done.status === stat)
+
+    })
+    setCount(counting.length)
+    console.log('counting length', counting.length)
+    console.log('done todos', counting)
   }
 
   const update = async (id) => {
@@ -71,51 +78,47 @@ function Home() {
 
 
       if (data.status === "Pending") {
+
+      
         await axios.put(`/todos/update/${data._id}`, {
           status: "Done",
         });
+   
+
       } else {
+
+     
         await axios.put(`/todos/update/${data._id}`, {
           status: "Pending",
         });
+
       }
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
 
-    // const mapped = todos.map(item => {
-    //   return item.id === id ? { ...item, status: item.status === "Pending" ? "Done" : "Pending"} : {...item}
-    // })
-    // setTodos([...mapped])
-
-
   }
 
-  function Counter(stat) {
-    const counting = todos.filter(done => {
-      return (done.status === stat)
 
-    })
-    setCount(counting.length)
-    console.log('counting length', counting.length)
-  }
 
   useEffect(() => {
     Counter('Done')
     console.log('the count', count)
 
     const fetchTodos = async () => {
-      const todos = await axios.get(`/user/todos/${theUser.userId}`);
-      console.log('the todos', todos)
+     
+      const theTodos = await axios.get(`/user/todos/${theUser.userId}`);
+      console.log('the todos', theTodos)
 
-      const { data } = todos;
+      const { data } = theTodos;
 
       setTodos(data)
+     
     }
 
     fetchTodos()
-  }, [loading, count, theUser.userId]);
+  }, [loading, count]);
 
 
   function Tracker() {
